@@ -3,35 +3,13 @@ import { Request, Response } from "express";
 import validator from '../schema/schema'
 import Tables from '../models/model'
 import bcrypt from 'bcrypt'
-import nodemailer from 'nodemailer'
 
 const JWT_SECRET = process.env.JWT_SECRET as string
 
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-        user: process.env.EMAIL_ADDRESS,
-        pass: process.env.EMAIL_PASS,
-    },
-    debug: true,
-    logger: true
-})
 
-
-
-
-const testing = async (): Promise<void> => {
+const testing = async (req: Request, res: Response): Promise<void> => {
     try {
-        const info = await transporter.sendMail({
-            from: '"Wilson Mwesigwa" bugiriwilson651@gmail.com', // sender address
-            to: "bugiriwilson651@gmail.com", // recipient(s)
-            subject: "Hello from Gmail", // subject line
-            text: "Hello world!", // plain text
-            html: "<b>Hello world! this is car-apps-</b>", // HTML body
-        });
-        console.log("Message sent: %s", info.messageId);
+        console.log("Message sent: %s");
     } catch (error) {
         console.error("Error sending email:", error);
     }
@@ -45,7 +23,7 @@ const hashPassword = async (password: string): Promise<string> => {
 }
 
 const generateJWT = (id: string) => {
-    const token = jwt.sign({id}, JWT_SECRET , { expiresIn: "7d" })
+    const token = jwt.sign({ id }, JWT_SECRET, { expiresIn: "7d" })
     return token
 }
 
@@ -162,7 +140,7 @@ const signIn = async (req: Request, res: Response) => {
 
     } catch (error) {
         console.error(error)
-        res.status(500).json({ message: 'internal server error'+JWT_SECRET })
+        res.status(500).json({ message: 'internal server error' })
     }
 }
 

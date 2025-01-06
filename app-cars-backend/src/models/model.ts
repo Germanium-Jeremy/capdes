@@ -21,6 +21,26 @@ const mechanicSchema = new mongoose.Schema({
         default: null
     },
     whatsappNumber: String,
+    history: [{
+        name: String,
+        time: { type: String, default: Date.now },
+        client: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            default: null
+        },
+        details: String
+    }],
+    notification: [{
+        name: String,
+        time: { type: String, default: Date.now },
+        client: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            default: null
+        },
+        details: String
+    }]
 })
 
 const ownerSchema = new mongoose.Schema({
