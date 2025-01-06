@@ -1,6 +1,8 @@
+import { globalStyles } from "@/app/Styles/MainStyles";
 import { Colors } from "@/constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { LinearGradient } from "expo-linear-gradient";
+import { Link } from "expo-router";
 import { Dimensions, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function LoginScreen() {
@@ -36,7 +38,7 @@ export default function LoginScreen() {
                                    <Text style={{ fontSize: 18 }}>Email</Text>
                                    <View style={styles.formFields}>
                                         <Ionicons name="mail" size={25} />
-                                        <TextInput placeholder="email@example.dom" placeholderTextColor={'#555'} style={styles.formInputs} />
+                                        <TextInput placeholder="email@example.dom" placeholderTextColor={'#555'} style={globalStyles.formInputs} />
                                         <Ionicons name="checkmark" size={25} />
                                    </View>
                               </View>
@@ -45,12 +47,13 @@ export default function LoginScreen() {
                                    <Text style={{ fontSize: 18 }}>Password</Text>
                                    <View style={styles.formFields}>
                                         <Ionicons name="key" size={25} />
-                                        <TextInput  placeholder="my password" placeholderTextColor={'#555'} style={styles.formInputs} />
+                                        <TextInput  placeholder="my password" placeholderTextColor={'#555'} style={globalStyles.formInputs} />
                                         <Ionicons name="checkmark" size={25} />
                                    </View>
                               </View>
 
-                              <Text style={{ color: '#FFB300', textAlign: 'center', fontSize: 18, marginTop: 30 }}>Forgot Password?</Text>
+                              <Link href={'/(auth)/forgot'} style={{ color: '#FFB300', textAlign: 'center', fontSize: 18, marginTop: 30 }}>Forgot Password?</Link>
+                              <Link href={'/(auth)/signup'} style={{ color: '#FFB300', textAlign: 'center', fontSize: 18, marginTop: 30 }}>Don't have an account?</Link>
 
                               <TouchableOpacity style={[styles.buttons, { marginTop: 30 }]}>
                                    <Text style={styles.textBtn}>Log in</Text>
@@ -92,15 +95,4 @@ const styles = StyleSheet.create({
           flexDirection: 'row',
           gap: 1,
      },
-     formInputs: {
-          fontSize: 18,
-          padding: 5,
-          paddingHorizontal: 10,
-          color: "#111",
-          width: '100%',
-          borderWidth: 0,
-          outline: "none",
-          outlineColor: "#aef",
-          marginHorizontal: 2
-     }
 });

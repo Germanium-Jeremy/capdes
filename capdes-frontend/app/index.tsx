@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions } from "react-native";
 import { router } from "expo-router";
 
-export default function Index() {
+export default function HomeScreen() {
   const { width, height } = Dimensions.get("window");
 
   return (
