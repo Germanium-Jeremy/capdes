@@ -1,11 +1,8 @@
 import Joi from 'joi';
 
 
-const registrationSchema = Joi.object({
-    type: Joi.string().required().messages({
-        'string.empty': 'Type is required',
-        'any.required': 'Type is required',
-    }),
+
+const regularUserSchema = Joi.object({
     names: Joi.string().required().messages({
         'string.empty': 'Name is required',
         'any.required': 'Name is required',
@@ -23,26 +20,23 @@ const registrationSchema = Joi.object({
         'string.min': 'Password must be at least 6 characters',
         'any.required': 'Password is required',
     }),
-});
-
-const garageStaffSchema = Joi.object({
-    userId: Joi.string().required().messages({
-        'string.empty': 'user id is required',
-        'any.required': 'user id is required'
-    }),
-    companyId: Joi.string().required().messages({
-        'string.empty': 'Company id is required',
-        'any.required': 'Company id is required',
-    }),
-    whatsappNumber: Joi.string().required().messages({
-        'string.empty': 'whatsapp number is required',
-        'any.required': 'whatsapp number is required',
-    })
-
 })
 
+
+const mechanicSchema = Joi.object({
+    garageId: Joi.string().required().messages({
+        'string.empty': 'Garage or Company name is required',
+        'any.required': 'Garage or Company name is required'
+    }),
+    userId: Joi.string().required().messages({
+        'string.empty': 'User is required',
+        'any.required': 'User is required'
+    })
+});
+
+
 const garageSchema = Joi.object({
-    name: Joi.string().required().messages({
+    garageName: Joi.string().required().messages({
         'string.empty': 'garage name is required',
         'any.required': 'garage name is required'
     }),
@@ -66,30 +60,16 @@ const garageSchema = Joi.object({
         'string.empty': 'registration proof is required',
         'any.required': 'registration proof is required'
     }),
-    email: Joi.string().email().messages({
-        'string.email': 'email is invalid',
-    }),
     workingTime: Joi.string().required().messages({
         'string.empty': 'working time is required',
         'any.required': 'working time is required'
     })
 })
 
-const signInSchema = Joi.object({
-    email: Joi.string().email().required().messages({
-        'string.email': 'invalid email',
-        'any.required': 'Email is required'
-    }),
-    password: Joi.string().min(4).required().messages({
-        'string.min': 'incorrect password',
-        'any.required': 'password is required'
-    })
-})
 
 
 export default {
-    registrationSchema,
-    garageStaffSchema,
+    regularUserSchema,
     garageSchema,
-    signInSchema
+    mechanicSchema,
 }

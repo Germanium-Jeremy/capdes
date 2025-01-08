@@ -1,14 +1,14 @@
+import { required } from "joi";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
     names: { type: String, require: true },
-    email: String,
-    phoneNumber: String,
-    password: String,
-    role: { type: String, default: 'user' },
+    email: { type: String, require: true },
+    phoneNumber: { type: String, require: true },
+    password: { type: String, require: true },
 });
 
-const mechanicSchema = new mongoose.Schema({
+const garageStaffSchema = new mongoose.Schema({
     details: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -18,16 +18,15 @@ const mechanicSchema = new mongoose.Schema({
     garage: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Garage',
-        default: null
+        required: true
     },
-    whatsappNumber: String,
     history: [{
-        name: String,
+        name: { type: String, require: true },
         time: { type: String, default: Date.now },
         client: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
-            default: null
+            required: true
         },
         details: String
     }],
@@ -40,20 +39,16 @@ const mechanicSchema = new mongoose.Schema({
             default: null
         },
         details: String
-    }]
+    }],
+    staffRole: {
+        type: String,
+        default: 'staff'
+    }
 })
 
-const ownerSchema = new mongoose.Schema({
-    names: { type: String, require: true },
-    email: String,
-    phoneNumber: String,
-    password: String,
-    role: { type: String, default: 'owner' },
-    companyName: String
-})
 
 const garageSchema = new mongoose.Schema({
-    name: String,
+    garageName: String,
     owner: String,
     location: String,
     mechanics: [{
@@ -62,23 +57,21 @@ const garageSchema = new mongoose.Schema({
     tel: String,
     license: String,
     registrationProof: String,
-    email: String,
     workingTime: String,
-    workingDays: String,
     waitList: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Mechanic',
-        default: null
+        default: []
     }],
     history: [{
         name: String,
         time: String,
-        details: String
+        details: String,
+        default: []
     }]
 
 })
 const User = mongoose.model('User', userSchema);
-const Mechanic = mongoose.model('Mechanic', mechanicSchema)
-const Owner = mongoose.model('Owner', ownerSchema)
+const GarageStaff = mongoose.model('GarageStaff', garageStaffSchema)
 const Garage = mongoose.model('Garage', garageSchema)
-export default { User, Mechanic, Owner, Garage }
+export default { User, GarageStaff, Garage }
