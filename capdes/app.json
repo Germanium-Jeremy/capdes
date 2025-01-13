@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "capdes",
+    "slug": "capdes",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/Design3.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/Design3.png",
+        "backgroundColor": "#11111100"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/Design.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/Design.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#1110"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

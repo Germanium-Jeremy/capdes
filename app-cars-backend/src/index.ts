@@ -25,7 +25,7 @@ const server = http.createServer(app)
 const io = new Server(server)
 
 
-mongoose.connect(process.env.MONGO_TEST as string)
+mongoose.connect(process.env.MONGO_URL as string)
     .then(() => {
         server.listen(port)
         console.log(`Example app listening on port ${port}`)
