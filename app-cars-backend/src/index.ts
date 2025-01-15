@@ -27,7 +27,7 @@ const server = http.createServer(app)
 const io = new Server(server)
 
 
-mongoose.connect(process.env.MONGO_URL as string)
+mongoose.connect(process.env.MONGO_TEST as string)
     .then(async() => {
         server.listen(port,()=>{
             console.log(`Server is running on port ${port}`)

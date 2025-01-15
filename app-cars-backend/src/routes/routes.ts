@@ -16,10 +16,12 @@ router.post('/signIn', authController.signIn)
 router.get('/test', authController.checkToken)
 
 //users routes
-router.get('/users', authController.checkToken,userController.getUsers)
+router.get('/users', authController.checkToken, userController.getUsers)
+router.get('/user/:userId', authController.checkToken, userController.getUser)
 
 //mechanics routes
-router.get('/mechanics', authController.checkToken,userController.getMechanics)
+router.get('/mechanics', authController.checkToken, userController.getMechanics)
+router.get('/mechanic/:mechanicId', authController.checkToken, userController.getMechanic)
 
 //garages routes
 router.get('/garages', authController.checkToken, userController.getGarages)
