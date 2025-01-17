@@ -29,10 +29,10 @@ const Header: React.FC<CustomHeader> = ({ title = "Header" }) => {
                <Text style={styles.headerTitle}>{title}</Text>
                {/* <Text style={styles.headerTitle}>User</Text> */}
                <View style={{ display: 'flex', flexDirection: 'row', gap: 20 }}>
-                    <Pressable onPress={() => router.push('/(onboarding)/notifications')}>
+                    <Pressable onPress={() => router.push('/(authenticated)/notifications')}>
                          <Ionicons name='notifications' size={25} color={"white"} />
                     </Pressable>
-                    <Pressable onPress={() => router.push('/(onboarding)/settings')}>
+                    <Pressable onPress={() => router.push('/(authenticated)/settings')}>
                          <Ionicons name='settings' size={25} color={"white"} />
                     </Pressable>
                </View>
@@ -52,6 +52,7 @@ function createStyles({ theme }: StyleProps) {
                display: 'flex',
                flexDirection: 'row',
                paddingHorizontal: 30,
+               marginTop: 25,
           },
           headerTitle: {
                color: "white",

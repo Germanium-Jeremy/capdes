@@ -14,8 +14,10 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/Design3.png",
-        "backgroundColor": "#11111100"
-      }
+        "backgroundColor": "#11111100",
+        "backgroundImage": "./assets/images/Design3.png"
+      },
+      "package": "com.djeremiah.capdes"
     },
     "web": {
       "bundler": "metro",
@@ -29,6 +31,7 @@
         {
           "image": "./assets/images/Design.png",
           "imageWidth": 200,
+          "imageHeight": 200,
           "resizeMode": "contain",
           "backgroundColor": "#1110"
         }
@@ -36,6 +39,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "76094c34-4da6-45a6-8353-1e46b703926f"
+      }
+    },
+    "owner": "djeremiah"
   }
 }

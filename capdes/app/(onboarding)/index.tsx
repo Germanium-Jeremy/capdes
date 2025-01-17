@@ -53,7 +53,7 @@ export default function LandingScreen() {
                          <Text style={styles.textBtn}>Register</Text>
                     </TouchableOpacity>
                </View>
-               <TouchableOpacity style={[styles.buttons, { alignSelf: 'center', width: '50%' }]} onPress={() => router.push('/(authenticated)')}>
+               <TouchableOpacity style={[styles.buttons, { alignSelf: 'center', width: '50%' }]} onPress={() => router.push('/(authenticated)/listMechanics')}>
                     <Text style={styles.textBtn}>Got a Problem</Text>
                </TouchableOpacity>
           </LinearGradient>

@@ -34,7 +34,7 @@ const NotificationScreen = () => {
                     start={{ x: 0, y: 0 }} end={{ x: width, y: height }} style={styles.container}>
                     <Container style={{ flexDirection: 'column', gap: 10 }}>
                          {/* <FlatList data={OurArray} keyExtractor={(item) => item.id.toString()} renderItem={({ item }) => ()} /> */}
-                         <FlatList data={[]} renderItem={({ }) => (
+                         {/* <FlatList data={[]} renderItem={({ }) => ( */}
                               <LinearGradient colors={[theme.background.third, theme.background.second, theme.background.first]} style={styles.notificationContainer}>
                                    <Image source={require('@/assets/images/MaleUser.png')} resizeMode='contain' style={styles.image} />
                                    <View style={styles.notText}>
@@ -43,7 +43,7 @@ const NotificationScreen = () => {
                                    </View>
                                    <Text style={styles.noteDate}>Mon, 22 Jun 2020</Text>
                               </LinearGradient>
-                         )} />
+                         {/* )} /> */}
                     </Container>
                </LinearGradient>
           </>
@@ -79,7 +79,7 @@ function createStyles({ theme, colorScheme }: StyleProps) {
                height: 100,
                borderRadius: '100%',
                borderWidth: 2,
-               borderColor: theme.textColor,
+               borderColor: theme.mainColor,
           },
           notText: {
                flexDirection: 'column',

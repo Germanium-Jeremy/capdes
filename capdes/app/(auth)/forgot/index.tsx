@@ -28,7 +28,7 @@ const index = () => {
                     start={{ x: 0, y: 0 }} end={{ x: width, y: height }} style={styles.container}
                >
                     <View style={{ position: 'relative' }}>
-                         <Text style={{ fontSize: 20, fontWeight: 500, textAlign: 'center', marginTop: 40, color: theme.textColor }}>Forgot Password</Text>
+                         <Text style={{ fontSize: 20, fontWeight: 500, textAlign: 'center', marginTop: 40, color: theme.secondTextColor }}>Forgot Password</Text>
                          <Image source={colorScheme === 'light' ? require('../../../assets/images/Design3.png') : require('../../../assets/images/Design.png')} resizeMode="contain" style={{ width: 50, height: 50, position: 'absolute', top: 10, right: 10 }} />
                     </View>
 
@@ -41,15 +41,15 @@ const index = () => {
                          end={{ x: width, y: height }}
                          style={[styles.container, { marginTop: 20, padding: 25, paddingTop: 40, borderTopLeftRadius: 10, borderTopRightRadius: 10 }]}
                     >
-                         <Text style={{ fontSize: 18, color: theme.textColor }}>Reset <Text style={{ fontSize: 20, fontWeight: 700 }}>CAPDES</Text> password</Text>
+                         <Text style={{ fontSize: 18, color: theme.secondTextColor }}>Reset <Text style={{ fontSize: 20, fontWeight: 700 }}>CAPDES</Text> password</Text>
 
                          <View style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 40 }}>
                               <View style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                                   <Text style={{ fontSize: 18, color: theme.textColor }}>Email</Text>
+                                   <Text style={{ fontSize: 18, color: theme.secondTextColor }}>Email</Text>
                                    <View style={styles.formFields}>
-                                        <Ionicons name="mail" size={25} color={theme.textColor} />
+                                        <Ionicons name="mail" size={25} color={theme.secondTextColor} />
                                         <TextInput placeholder="email@example.dom" placeholderTextColor={colorScheme === 'light' ? '#444a' : '#aaaa'} style={globalStyle.formInputs} />
-                                        <Ionicons name="checkmark" size={25} color={theme.textColor} />
+                                        <Ionicons name="checkmark" size={25} color={theme.secondTextColor} />
                                    </View>
                               </View>
 
@@ -60,11 +60,11 @@ const index = () => {
                          
                          <View style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 40 }}>
                               <View style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                                   <Text style={{ fontSize: 18, color: theme.textColor }}>Enter code</Text>
+                                   <Text style={{ fontSize: 18, color: theme.secondTextColor }}>Enter code</Text>
                                    <View style={styles.formFields}>
-                                        <Ionicons name="code-working" size={25} color={theme.textColor} />
+                                        <Ionicons name="code-working" size={25} color={theme.secondTextColor} />
                                         <TextInput placeholder="xxxxx" placeholderTextColor={colorScheme === 'light' ? '#444a' : '#aaaa'} style={globalStyle.formInputs} />
-                                        <Ionicons name="checkmark" size={25} color={theme.textColor} />
+                                        <Ionicons name="checkmark" size={25} color={theme.secondTextColor} />
                                    </View>
                               </View>
 
@@ -88,7 +88,7 @@ function createStyles({ theme, colorScheme }: StyleProps) {
           },
           buttons: {
                backgroundColor: theme.mainColor,
-               color: theme.textColor,
+               color: theme.secondTextColor,
                borderRadius: theme.mainRadius,
                paddingVertical: 8,
                paddingHorizontal: 20,
@@ -101,14 +101,14 @@ function createStyles({ theme, colorScheme }: StyleProps) {
                fontSize: 20,
                fontWeight: 500,
                textAlign: "center",
-               color: colorScheme !== "light" ? "#212F42" : "white",
+               color: colorScheme === "light" ? "#212F42" : "white",
           },
           formFields: {
                borderRightWidth: 0,
                borderLeftWidth: 0,
                borderTopWidth: 0,
                borderBottomWidth: 2,
-               borderColor: theme.textColor,
+               borderColor: theme.secondTextColor,
                display: 'flex',
                alignItems: 'center',
                flexDirection: 'row',
