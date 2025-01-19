@@ -31,7 +31,7 @@ const checkToken = async (req: Request, res: Response, next: NextFunction) => {
                 res.status(403).json({ message: 'Forbidden: Invalid token' });
                 return
             }
-            res.locals.user = { userId: decodedToken?.id };
+            res.locals = { userId: decodedToken?.id };
             next();
         });
     } catch (error) {

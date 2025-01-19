@@ -93,10 +93,9 @@ const registerGarage = async (req: Request, res: Response) => {
             workingTime
         })
         await newGarage.save()
-        const newGarageStaff = new model.GarageStaff({
+        const newGarageStaff = new model.GarageOwner({
             details: owner,
             garage: newGarage._id,
-            staffRole: 'owner'
         })
         await newGarageStaff.save()
         res.status(200).json({ message: newGarage._id })

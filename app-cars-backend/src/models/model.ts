@@ -1,4 +1,3 @@
-import { required } from "joi";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -13,7 +12,6 @@ const garageStaffSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
-
     },
     garage: {
         type: mongoose.Schema.Types.ObjectId,
@@ -40,10 +38,39 @@ const garageStaffSchema = new mongoose.Schema({
         },
         details: String
     }],
-    staffRole: {
-        type: String,
-        default: 'staff'
-    }
+})
+
+const garageOwnerSchema = new mongoose.Schema({
+    details: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
+    garage: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Garage',
+        required: true
+    },
+    history: [{
+        name: { type: String, require: true },
+        time: { type: String, default: Date.now },
+        client: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
+        details: String
+    }],
+    notification: [{
+        name: String,
+        time: { type: String, default: Date.now },
+        client: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            default: null
+        },
+        details: String
+    }],
 })
 
 
@@ -52,7 +79,9 @@ const garageSchema = new mongoose.Schema({
     owner: String,
     location: String,
     mechanics: [{
-        id: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'GarageStaff',
+        default: []
     }],
     tel: String,
     license: String,
@@ -73,5 +102,6 @@ const garageSchema = new mongoose.Schema({
 })
 const User = mongoose.model('User', userSchema);
 const GarageStaff = mongoose.model('GarageStaff', garageStaffSchema)
+const GarageOwner=mongoose.model("GarageOwner", garageOwnerSchema)
 const Garage = mongoose.model('Garage', garageSchema)
-export default { User, GarageStaff, Garage }
+export default { User, GarageStaff, Garage,GarageOwner }
