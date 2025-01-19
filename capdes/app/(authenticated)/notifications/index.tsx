@@ -35,16 +35,18 @@ const NotificationScreen = () => {
                     <Container style={{ flexDirection: 'column', gap: 10 }}>
                          {/* <FlatList data={OurArray} keyExtractor={(item) => item.id.toString()} renderItem={({ item }) => ()} /> */}
                          {/* <FlatList data={[]} renderItem={({ }) => ( */}
-                              <LinearGradient colors={[theme.background.third, theme.background.second, theme.background.first]} style={styles.notificationContainer}>
+                              {/* <LinearGradient colors={[theme.background.third, theme.background.second, theme.background.first]} style={styles.notificationContainer}>
                                    <Image source={require('@/assets/images/MaleUser.png')} resizeMode='contain' style={styles.image} />
                                    <View style={styles.notText}>
                                         <Text style={styles.noteTitle}>This is a notification</Text>
                                         <Text style={styles.noteDesc}>{truncateText(`The content of a notification goes here and in a small customised text. The content of a notification goes here and in a small customised text.`, 100)}</Text>
                                    </View>
                                    <Text style={styles.noteDate}>Mon, 22 Jun 2020</Text>
-                              </LinearGradient>
+                              </LinearGradient> */}
                          {/* )} /> */}
                     </Container>
+                    <View style={{ backgroundColor: colorScheme !== 'light' ? `${theme.mainColor}10` : '#0000', position: 'fixed', bottom: -100, left: -100, top: -100, width: 400, zIndex: -1, right: 0, borderRadius: '100%' }}></View>
+                    <View style={{ backgroundColor: colorScheme !== 'light' ? `${theme.mainColor}10` : "#0000", position: 'fixed', bottom: -80, left: -70, right: -20, height: 200, zIndex: -1, borderRadius: '100%' }}></View>
                </LinearGradient>
           </>
      )

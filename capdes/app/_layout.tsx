@@ -1,14 +1,12 @@
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import "react-native-reanimated";
 
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { SettingsProvider } from "@/context/SettingsContext";
-import { View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -19,26 +17,32 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
-  const [loggedInUser, setLoggedInUser] = useState(null)
+  const [loggedInUser, setLoggedInUser] = useState<null | string>("Mukami");
+  const router = useRouter()
 
   const checkIfUserIsLoggedIn = async () => {
     try {
-      const userData = await AsyncStorage.getItem("savedUser")
-      if (userData) {
-        setLoggedInUser(JSON.parse(userData))
+      const userData = await AsyncStorage.getItem("savedUser");
+      console.log("User Data: ", userData);
+      if (userData && userData != undefined) {
+        setLoggedInUser(userData);
       } else {
-        setLoggedInUser(null)
+        setLoggedInUser(null);
       }
     } catch (e) {
-      console.error("Error getting logged In user ", e)
+      console.error("Error getting logged In user ", e);
     }
-  }
+  };
 
-  useEffect(() => {
-    checkIfUserIsLoggedIn();
+  // useEffect(() => {
+  //   checkIfUserIsLoggedIn();
 
-    console.log(loggedInUser)
-  }, [])
+  //   if (loggedInUser) {
+  //     router.replace("/(authenticated)");
+  //   } else {
+  //     router.replace("/(auth)/login");
+  //   }
+  // }, [loggedInUser, router]);
 
   useEffect(() => {
     if (loaded) {
@@ -54,12 +58,12 @@ export default function RootLayout() {
     <GestureHandlerRootView>
       <ThemeProvider>
         <SettingsProvider>
-          <Stack>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(authenticated)" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(authenticated)" options={{ headerShown: false }} />
-            <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
             {/* <Stack.Screen name="index" options={{ headerShown: false }} /> */}
           </Stack>
           <StatusBar style="auto" />

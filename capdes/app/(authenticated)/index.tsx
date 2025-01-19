@@ -19,13 +19,6 @@ const index = () => {
      const { colorScheme, theme } = useContext(ThemeContext);
      const styles = createStyles({ theme, colorScheme });
      const globalStyle = globalStyles({ theme, colorScheme })
-     const backendUrl = "https://capdes-production.up.railway.app";
-
-     const handlePress = () => {
-          axios.get(`${backendUrl}/api`).then(response => {
-               console.log(response.data)
-          }).catch(error => console.info(error))
-     }
 
      return (
           <>
@@ -76,13 +69,15 @@ const index = () => {
                </View>
 
                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', gap: 20, marginTop: 30 }}>
-                    <Pressable style={styles.buttons} onPress={handlePress}>
+                    <Pressable style={styles.buttons}>
                          <Text style={styles.textBtn}>Update</Text>
                     </Pressable>
                     <Pressable style={styles.buttons}>
                          <Text style={styles.textBtn}>Delete Account</Text>
                     </Pressable>
                </View>
+               {/* <View style={{ backgroundColor: colorScheme !== 'light' ? `${theme.mainColor}10` : '#0000', position: 'fixed', bottom: -100, left: -100, top: -100, width: 400, zIndex: -1, right: 0, borderRadius: '100%' }}></View>
+               <View style={{ backgroundColor: colorScheme !== 'light' ? `${theme.mainColor}10` : "#0000", position: 'fixed', bottom: -80, left: -70, right: -20, height: 200, zIndex: -1, borderRadius: '100%' }}></View> */}
           </LinearGradient>
           </>
      )

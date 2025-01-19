@@ -30,12 +30,13 @@ import { Stack } from "expo-router";
 
 export default function UserLayout() {
      return (
-          <Stack>
+          <Stack screenOptions={{ headerShown: true }}>
                <Stack.Screen name="index" />
                <Stack.Screen name="settings" />
                <Stack.Screen name="notifications" />
                <Stack.Screen name="chat" />
                <Stack.Screen name="listMechanins" />
+               {/* <Stack.Screen name="mechanicD" /> */}
           </Stack>
      )
 }

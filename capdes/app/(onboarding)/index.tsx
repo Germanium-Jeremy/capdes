@@ -56,6 +56,9 @@ export default function LandingScreen() {
                <TouchableOpacity style={[styles.buttons, { alignSelf: 'center', width: '50%' }]} onPress={() => router.push('/(authenticated)/listMechanics')}>
                     <Text style={styles.textBtn}>Got a Problem</Text>
                </TouchableOpacity>
+               
+               <View style={{ backgroundColor: colorScheme !== 'light' ? `${theme.mainColor}10` : '#0000', position: 'fixed', bottom: -100, left: -100, top: -100, width: 400, zIndex: 0, right: 0, borderRadius: '100%' }}></View>
+               <View style={{ backgroundColor: colorScheme !== 'light' ? `${theme.mainColor}10` : "#0000", position: 'fixed', bottom: -80, left: -70, right: -20, height: 200, zIndex: 0, borderRadius: '100%' }}></View>
           </LinearGradient>
           </>
      );

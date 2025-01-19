@@ -79,8 +79,8 @@ const index = () => {
                     </View>
                </View>
                <Footer />
-               <View style={{ backgroundColor: `${theme.mainColor}30`, position: 'fixed', bottom: -100, left: -100, top: -100, width: 400, zIndex: -1, right: 0, borderRadius: '100%' }}></View>
-               <View style={{ backgroundColor: `${theme.mainColor}30`, position: 'fixed', bottom: -80, left: -70, right: -20, height: 200, zIndex: -1, borderRadius: '100%' }}></View>
+               <View style={{ backgroundColor: colorScheme !== 'light' ? `${theme.mainColor}10` : '#0000', position: 'fixed', bottom: -100, left: -100, top: -100, width: 400, zIndex: -1, right: 0, borderRadius: '100%' }}></View>
+               <View style={{ backgroundColor: colorScheme !== 'light' ? `${theme.mainColor}10` : "#0000", position: 'fixed', bottom: -80, left: -70, right: -20, height: 200, zIndex: -1, borderRadius: '100%' }}></View>
           </LinearGradient>
           </>
      )
@@ -88,12 +88,13 @@ const index = () => {
 
 export default index
 
-function createStyles({ theme }: StyleProps) {
+function createStyles({ theme, colorScheme }: StyleProps) {
      return StyleSheet.create({
           container: {
                flex: 1,
                paddingTop: 25,
                padding: 20,
+               overflow: 'hidden'
           },
           searchContainer: {
                borderColor: theme.mainColor,
@@ -130,7 +131,7 @@ function createStyles({ theme }: StyleProps) {
                paddingVertical: 5,
                alignItems: 'center',
                borderRadius: theme.mainRadius,
-               shadowColor: theme.mainColor,
+               shadowColor: theme.secondTextColor,
                shadowOffset: {
                     width: 0,
                     height: 2,
