@@ -7,6 +7,7 @@ import { ThemeContext } from '@/context/ThemeContext'
 import globalStyles from '@/app/Styles/MainStyles'
 import { Link, Stack } from 'expo-router'
 import Header from '../../components/ui/Header'
+import axios from 'axios'
 
 interface StyleProps {
      theme: typeof Colors.light | typeof Colors.dark | typeof Colors.custom;
@@ -38,29 +39,29 @@ const index = () => {
 
                <View style={{ display: 'flex', flexDirection: 'column' }}>
                     <View style={{ display: "flex", flexDirection: "column", gap: 2, marginTop: 20 }}>
-                         <Text style={{ fontSize: 18, color: theme.textColor }}>Full names</Text>
+                         <Text style={{ fontSize: 18, color: theme.secondTextColor }}>Full names</Text>
                          <View style={styles.formFields}>
-                              <Ionicons name="person" size={25} color={theme.textColor} />
+                              <Ionicons name="person" size={25} color={theme.secondTextColor} />
                               <TextInput  placeholder="John Doe" placeholderTextColor={colorScheme === 'light' ? '#444a' : '#aaaa'} style={globalStyle.formInputs} />
-                              <Ionicons name="checkmark" size={25} color={theme.textColor} />
+                              <Ionicons name="checkmark" size={25} color={theme.secondTextColor} />
                          </View>
                     </View>
 
                     <View style={{ display: "flex", flexDirection: "column", gap: 2, marginTop: 10 }}>
-                         <Text style={{ fontSize: 18, color: theme.textColor }}>Email</Text>
+                         <Text style={{ fontSize: 18, color: theme.secondTextColor }}>Email</Text>
                          <View style={styles.formFields}>
-                              <Ionicons name="mail" size={25} color={theme.textColor} />
+                              <Ionicons name="mail" size={25} color={theme.secondTextColor} />
                               <TextInput  placeholder="email@example.dom" placeholderTextColor={colorScheme === 'light' ? '#444a' : '#aaaa'} style={globalStyle.formInputs} />
-                              <Ionicons name="checkmark" size={25} color={theme.textColor} />
+                              <Ionicons name="checkmark" size={25} color={theme.secondTextColor} />
                          </View>
                     </View>
 
                     <View style={{ display: "flex", flexDirection: "column", gap: 2, marginTop: 10 }}>
-                         <Text style={{ fontSize: 18, color: theme.textColor }}>Telephone</Text>
+                         <Text style={{ fontSize: 18, color: theme.secondTextColor }}>Telephone</Text>
                          <View style={styles.formFields}>
-                              <Ionicons name="call" size={25} color={theme.textColor} />
+                              <Ionicons name="call" size={25} color={theme.secondTextColor} />
                               <TextInput  placeholder="250 788 888 888" placeholderTextColor={colorScheme === 'light' ? '#444a' : '#aaaa'} style={globalStyle.formInputs} />
-                              <Ionicons name="checkmark" size={25} color={theme.textColor} />
+                              <Ionicons name="checkmark" size={25} color={theme.secondTextColor} />
                          </View>
                     </View>
                     
@@ -75,6 +76,8 @@ const index = () => {
                          <Text style={styles.textBtn}>Delete Account</Text>
                     </Pressable>
                </View>
+               {/* <View style={{ backgroundColor: colorScheme !== 'light' ? `${theme.mainColor}10` : '#0000', position: 'fixed', bottom: -100, left: -100, top: -100, width: 400, zIndex: -1, right: 0, borderRadius: '100%' }}></View>
+               <View style={{ backgroundColor: colorScheme !== 'light' ? `${theme.mainColor}10` : "#0000", position: 'fixed', bottom: -80, left: -70, right: -20, height: 200, zIndex: -1, borderRadius: '100%' }}></View> */}
           </LinearGradient>
           </>
      )
@@ -90,7 +93,7 @@ function createStyles({ theme, colorScheme }: StyleProps) {
           },
           buttons: {
                backgroundColor: theme.mainColor,
-               color: theme.textColor,
+               color: theme.secondTextColor,
                borderRadius: theme.mainRadius,
                paddingVertical: 8,
                paddingHorizontal: 20,
@@ -103,14 +106,14 @@ function createStyles({ theme, colorScheme }: StyleProps) {
                fontSize: 18,
                fontWeight: 500,
                textAlign: "center",
-               color: colorScheme !== "dark" ? "#111" : "white",
+               color: colorScheme === "dark" ? "#111" : "white",
           },
           formFields: {
                borderRightWidth: 0,
                borderLeftWidth: 0,
                borderTopWidth: 0,
                borderBottomWidth: 2,
-               borderColor: theme.textColor,
+               borderColor: theme.secondTextColor,
                display: 'flex',
                alignItems: 'center',
                flexDirection: 'row',

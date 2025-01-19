@@ -12,7 +12,7 @@ export default function globalStyles({ theme, colorScheme}: StyleProps) {
                fontSize: 18,
                padding: 5,
                paddingHorizontal: 10,
-               color: theme.textColor,
+               color: theme.secondTextColor,
                width: '100%',
                borderWidth: 0,
                outlineColor: theme.mainColor,

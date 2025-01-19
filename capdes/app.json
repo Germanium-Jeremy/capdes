@@ -4,7 +4,7 @@
     "slug": "capdes",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/Design3.png",
+    "icon": "./assets/images/logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,22 +13,25 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/Design3.png",
-        "backgroundColor": "#11111100"
-      }
+        "foregroundImage": "./assets/images/logo.png",
+        "backgroundColor": "#11111100",
+        "backgroundImage": "./assets/images/logo.png"
+      },
+      "package": "com.djeremiah.capdes"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/Design.png"
+      "favicon": "./assets/images/logo.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/Design.png",
+          "image": "./assets/images/logo.png",
           "imageWidth": 200,
+          "imageHeight": 200,
           "resizeMode": "contain",
           "backgroundColor": "#1110"
         }
@@ -36,6 +39,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "76094c34-4da6-45a6-8353-1e46b703926f"
+      }
+    },
+    "owner": "djeremiah"
   }
 }

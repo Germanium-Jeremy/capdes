@@ -27,14 +27,14 @@ const index = () => {
           >
 
                <View style={{ position: 'relative' }}>
-                    <Text style={{ fontSize: 20, fontWeight: 500, textAlign: 'center', marginTop: 40, color: theme.textColor }}>Register</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 500, textAlign: 'center', marginTop: 40, color: theme.secondTextColor }}>Register</Text>
                     <Image source={colorScheme === 'light' ? require('../../../assets/images/Design3.png') : require('../../../assets/images/Design.png')} resizeMode="contain" style={{ width: 50, height: 50, position: 'absolute', top: 10, right: 10 }} />
                </View>
 
                <View style={{ display: "flex", flex: 1, flexDirection: "column", gap: 10, marginTop: 40, justifyContent: "center" }}>
-                    <Text style={{ fontSize: 18, fontWeight: 200, color: theme.textColor }}>Are you a garage or company owner or You are a mechanic who works at the garage.</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 200, color: theme.secondTextColor }}>Are you a garage or company owner or You are a mechanic who works at the garage.</Text>
 
-                    <Text style={{ fontSize: 18, fontWeight: 200, color: theme.textColor }}>We require this info to know how to manage the business and your staff.</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 200, color: theme.secondTextColor }}>We require this info to know how to manage the business and your staff.</Text>
 
                     <TouchableOpacity style={[styles.buttons, { marginTop: 30 }]} onPress={() => router.push("/")}>
                          <Text style={styles.textBtn}>Mechanic</Text>
@@ -44,6 +44,8 @@ const index = () => {
                          <Text style={styles.textBtn}>Owner</Text>
                     </TouchableOpacity>
                </View>
+               <View style={{ backgroundColor: colorScheme !== 'light' ? `${theme.mainColor}10` : '#0000', position: 'fixed', bottom: -100, left: -100, top: -100, width: 400, zIndex: -1, right: 0, borderRadius: '100%' }}></View>
+               <View style={{ backgroundColor: colorScheme !== 'light' ? `${theme.mainColor}10` : "#0000", position: 'fixed', bottom: -80, left: -70, right: -20, height: 200, zIndex: -1, borderRadius: '100%' }}></View>
           </LinearGradient>
      )
 }
@@ -58,7 +60,7 @@ function createStyles({ theme, colorScheme }: StyleProps) {
           },
           buttons: {
                backgroundColor: theme.mainColor,
-               color: theme.textColor,
+               color: theme.secondTextColor,
                borderRadius: theme.mainRadius,
                paddingVertical: 8,
                paddingHorizontal: 20,
@@ -71,14 +73,14 @@ function createStyles({ theme, colorScheme }: StyleProps) {
                fontSize: 20,
                fontWeight: 500,
                textAlign: "center",
-               color: colorScheme !== "light" ? "#212F42" : "white",
+               color: colorScheme === "light" ? "#212F42" : "white",
           },
           formFields: {
                borderRightWidth: 0,
                borderLeftWidth: 0,
                borderTopWidth: 0,
                borderBottomWidth: 2,
-               borderColor: theme.textColor,
+               borderColor: theme.secondTextColor,
                display: 'flex',
                alignItems: 'center',
                flexDirection: 'row',

@@ -15,7 +15,7 @@ interface StyleProps {
 
 const Phone = () => {
      const { width, height } = Dimensions.get('window')
-     const { colorScheme, setColorScheme, theme } = useContext(ThemeContext);
+     const { colorScheme, theme } = useContext(ThemeContext);
      const styles = createStyles({ theme, colorScheme });
      const globalStyle = globalStyles({ theme, colorScheme })
 
@@ -38,31 +38,33 @@ const Phone = () => {
                               <Text style={styles.textBtn}>Chat</Text>
                          </Pressable>
                          <Pressable style={styles.buttons}>
-                              <Text style={styles.textBtn}>Chat</Text>
+                              <Text style={styles.textBtn}>Call</Text>
                          </Pressable>
                     </View>
 
                     <View style={{ flexDirection: 'column', gap: 10, marginTop: 50 }}>
                          <View style={styles.formFields}>
-                              <Ionicons name="person" size={25} color={theme.textColor} />
+                              <Ionicons name="person" size={25} color={theme.secondTextColor} />
                               <Text style={globalStyle.formInputs}>This is a mechanic</Text>
                          </View>
                          
                          <View style={styles.formFields}>
-                              <Ionicons name="home" size={25} color={theme.textColor} />
+                              <Ionicons name="home" size={25} color={theme.secondTextColor} />
                               <Text style={globalStyle.formInputs}>This is a mechanic</Text>
                          </View>
 
                          <View style={styles.formFields}>
-                              <Ionicons name="call" size={25} color={theme.textColor} />
+                              <Ionicons name="call" size={25} color={theme.secondTextColor} />
                               <Text style={globalStyle.formInputs}>This is a mechanic</Text>
                          </View>
 
                          <View style={styles.formFields}>
-                              <Ionicons name="logo-whatsapp" size={25} color={theme.textColor} />
+                              <Ionicons name="logo-whatsapp" size={25} color={theme.secondTextColor} />
                               <Text style={globalStyle.formInputs}>This is a mechanic</Text>
                          </View>
                     </View>
+                    <View style={{ backgroundColor: colorScheme !== 'light' ? `${theme.mainColor}10` : '#0000', position: 'fixed', bottom: -100, left: -100, top: -100, width: 400, zIndex: -1, right: 0, borderRadius: '100%' }}></View>
+                    <View style={{ backgroundColor: colorScheme !== 'light' ? `${theme.mainColor}10` : "#0000", position: 'fixed', bottom: -80, left: -70, right: -20, height: 200, zIndex: -1, borderRadius: '100%' }}></View>
                </LinearGradient>
           </>
      )
@@ -78,7 +80,7 @@ function createStyles({ theme, colorScheme }: StyleProps) {
           },
           buttons: {
                backgroundColor: theme.mainColor,
-               color: theme.textColor,
+               color: theme.secondTextColor,
                borderRadius: theme.mainRadius,
                paddingVertical: 8,
                paddingHorizontal: 20,
@@ -91,14 +93,14 @@ function createStyles({ theme, colorScheme }: StyleProps) {
                fontSize: 18,
                fontWeight: 500,
                textAlign: "center",
-               color: colorScheme !== "dark" ? "#111" : "white",
+               color: colorScheme === "dark" ? "#111" : "white",
           },
           formFields: {
                borderRightWidth: 0,
                borderLeftWidth: 0,
                borderTopWidth: 0,
                borderBottomWidth: 2,
-               borderColor: theme.textColor,
+               borderColor: theme.secondTextColor,
                display: 'flex',
                alignItems: 'center',
                flexDirection: 'row',
