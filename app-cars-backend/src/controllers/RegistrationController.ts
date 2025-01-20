@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response } from "express";
-import validator from '../schema/schema'
+import validator from '../validator/validator'
 import model from '../models/model'
 import bcrypt from 'bcrypt'
 

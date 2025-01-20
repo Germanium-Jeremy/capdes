@@ -22,6 +22,27 @@ const getGarages = async (req: Request, res: Response) => {
     }
 };
 
+const getGarage = async (req: Request, res: Response) => {
+    try {
+        const { garageId } = req.params;
+        const garage = await model.Garage.findById(garageId)
+            .select('garageName owner location tel license registrationProof workingTime')
+            .populate({
+                path: 'owner',
+                select: 'names email phoneNumber',
+                model: 'User'
+            });
+        if (!garage) {
+            res.status(404).json({ message: 'Garage not found' });
+            return
+        }
+        res.status(200).json(garage);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error fetching garage' });
+    }
+};
+
 const updateGarage = async (req: Request, res: Response) => {
     try {
         const { garageId } = req.params;
@@ -52,5 +73,5 @@ export default {
     getGarages,
     updateGarage,
     deleteGarage,
-    
+    getGarage
 }

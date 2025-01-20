@@ -30,7 +30,7 @@ router.get('/mechanic/:mechanicId', authController.checkToken, garageStaffContro
 
 //garages routes
 router.get('/garages', authController.checkToken, garageController.getGarages)
-
+router.get('/garage/:garageId', authController.checkToken, garageController.getGarage)
 
 
 
