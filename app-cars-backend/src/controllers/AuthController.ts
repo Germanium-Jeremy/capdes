@@ -76,10 +76,19 @@ const signIn = async (req: Request, res: Response) => {
     }
 }
 
+const generateResetCode = async (userId: string) => {
+
+    const salt = await bcrypt.genSalt(100)
+    const result = await bcrypt.hash(userId, salt)
+    const resetCode = result.slice(0, 5)
+    return resetCode
+}
+
 
 export default {
     checkToken,
     checkUser,
     refreshToken,
-    signIn
+    signIn,
+    generateResetCode
 }

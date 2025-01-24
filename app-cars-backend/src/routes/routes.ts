@@ -4,6 +4,7 @@ import authController from "../controllers/AuthController"
 import userController from "../controllers/UserController"
 import garageController from "../controllers/GarageController"
 import garageStaffController from "../controllers/GarageStaffController"
+import appOwnerController from "../controllers/AppOwnerController"
 
 const router = Router()
 
@@ -32,6 +33,10 @@ router.get('/mechanic/:mechanicId', authController.checkToken, garageStaffContro
 router.get('/garages', authController.checkToken, garageController.getGarages)
 router.get('/garage/:garageId', authController.checkToken, garageController.getGarage)
 
+
+//help support routes
+router.post('/helpSupport', authController.checkToken, appOwnerController.saveHelpSupport)
+// router.get('/helpSupport/:helpSupportId', authController.checkToken, appOwnerController.getHelpSupport)
 
 
 

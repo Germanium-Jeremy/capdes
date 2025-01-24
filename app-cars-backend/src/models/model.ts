@@ -100,8 +100,32 @@ const garageSchema = new mongoose.Schema({
     }]
 
 })
+
+const helpSupportSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    body: {
+        type: String,
+        required: true
+    },
+    sender: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    type: {
+        type: String,
+        required: true
+    },
+    time: { type: Date, default: Date.now },
+})
+
 const User = mongoose.model('User', userSchema);
 const GarageStaff = mongoose.model('GarageStaff', garageStaffSchema)
-const GarageOwner=mongoose.model("GarageOwner", garageOwnerSchema)
+const GarageOwner = mongoose.model("GarageOwner", garageOwnerSchema)
 const Garage = mongoose.model('Garage', garageSchema)
-export default { User, GarageStaff, Garage,GarageOwner }
+const HelpSupport = mongoose.model('HelpSupport', helpSupportSchema)
+
+export default { User, GarageStaff, Garage, GarageOwner, HelpSupport }

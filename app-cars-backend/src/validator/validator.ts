@@ -66,10 +66,26 @@ const garageSchema = Joi.object({
     })
 })
 
+const helpSupportSchema = Joi.object({
+    title: Joi.string().required().messages({
+        'string.empty': 'title is required',
+        'any.required': 'title is required'
+    }),
+    body: Joi.string().required().messages({
+        'string.empty': 'problem is required',
+        'any.required': 'problem is required'
+    }),
+    type: Joi.string().required().messages({
+        'string.empty': 'type is required',
+        'any.required': 'type is required'
+    })
+})
+
 
 
 export default {
     regularUserSchema,
     garageSchema,
     mechanicSchema,
+    helpSupportSchema,
 }
