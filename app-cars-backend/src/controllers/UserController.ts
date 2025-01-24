@@ -14,7 +14,7 @@ const getUsers = async (req: Request, res: Response) => {
         console.error(error);
         res.status(500).json({ message: 'Error fetching users' });
     }
-};
+}
 
 const getUser = async (req: Request, res: Response) => {
     try {
@@ -29,7 +29,7 @@ const getUser = async (req: Request, res: Response) => {
         console.error(error);
         res.status(500).json({ message: 'Error fetching user' });
     }
-};
+}
 
 const updateUser = async (req: Request, res: Response) => {
     try {
@@ -42,7 +42,7 @@ const updateUser = async (req: Request, res: Response) => {
         console.error(error);
         res.status(500).json({ message: 'Error updating user' });
     }
-};
+}
 
 const deleteUser = async (req: Request, res: Response) => {
     try {
@@ -54,7 +54,7 @@ const deleteUser = async (req: Request, res: Response) => {
         console.error(error);
         res.status(500).json({ message: 'Error deleting user' });
     }
-};
+}
 
 export default {
     getUsers,
