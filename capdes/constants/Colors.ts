@@ -1,26 +1,32 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
-
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
-
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    text: "#000000",
+    headings: "#2222FF",
+    background: "#FFFFFF",
+    buttonsBg: "#2222FF",
+    buttonTxt: "#FFFFFF",
+    mainIcons: "#FFFFFF",
+    mainIconsBg: "#2222FF",
+    icons: "#111111",
+    links: "#2222FF",
+    formInputsPlaceholders: "#AAAAAA",
+    formInputsTxt: "#BBBBBB",
+    formInputsBorder: "#AAAAAA",
+    formInputsBg: "#FFFFFF",
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    text: "#FFFFFF",
+    headings: "#0055FF",
+    background: "#000022",
+    buttonsBg: "#0055FF",
+    buttonTxt: "#FFFFFF",
+    mainIcons: "#FFFFFF",
+    mainIconsBg: "#0055FF",
+    icons: "#FFFFFF",
+    links: "#0055FF",
+    formInputsPlaceholders: "#777777",
+    formInputsTxt: "#888888",
+    formInputsBorder: "#777777",
+    formInputsBg: "#000022",
   },
 };
