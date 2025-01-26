@@ -1,6 +1,7 @@
 import { Response, Request } from 'express';
 import model from '../models/model';
 import authController from './AuthController';
+import emailController from './EmailController';
 
 
 const getUsers = async (req: Request, res: Response) => {
@@ -62,14 +63,24 @@ const deleteUser = async (req: Request, res: Response) => {
 const getResetCode = async (req: Request, res: Response) => {
     try {
         const { email } = req.body as { email: string }
-        const userData = await model.User.findOne({ email: email }).select(' email ')
+        const userData = await model.User.findOne({ email: email }).select('email names')
         if (!userData) {
             res.status(404).json({ message: 'Invalid user' });
             return
         }
 
         const resetCode = await authController.generateResetCode(userData._id.toString())
-        res.status(200).json({ resetCode: resetCode })
+
+        const emailObject = {
+            name: userData.names || '',
+            email: userData.email || '',
+            message: `This is reset code ${resetCode}`,
+            title: 'Reset Code'
+        }
+
+        await model.User.findByIdAndUpdate(userData._id.toString(), { recoverMode: true })
+        await emailController.sendEmail(emailObject)
+        res.status(200).json({ message: 'Reset code sent to email' })
 
     } catch (error) {
         console.error(error)
@@ -77,27 +88,12 @@ const getResetCode = async (req: Request, res: Response) => {
     }
 }
 
-const checkResetCode = async (req: Request, res: Response) => {
-    try {
-        res.status(200).json({})
-    } catch (error) {
 
-    }
-}
-
-const resetPassword = async (req: Request, res: Response) => {
-    try {
-
-
-    } catch (error) {
-
-    }
-}
 
 export default {
     getUsers,
     getUser,
     updateUser,
     deleteUser,
-    resetPassword,
+    getResetCode,
 };

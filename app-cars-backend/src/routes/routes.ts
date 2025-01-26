@@ -5,6 +5,7 @@ import userController from "../controllers/UserController"
 import garageController from "../controllers/GarageController"
 import garageStaffController from "../controllers/GarageStaffController"
 import appOwnerController from "../controllers/AppOwnerController"
+import testController from "../controllers/TestController.test"
 
 const router = Router()
 
@@ -17,12 +18,13 @@ router.post('/registerGarage', registerController.registerGarage)
 //auth routes
 router.post('/signIn', authController.signIn)
 router.get('/test', authController.checkToken)
-
+router.put('/saveNewPassword',authController.checkResetToken, authController.checkToken, authController.resetCode)
+router.post('/checkResetCode', authController.checkResetToken,authController.checkResetCode)
 
 //users routes
 router.get('/users', authController.checkToken, userController.getUsers)
 router.get('/user/:userId', authController.checkToken, userController.getUser)
-
+router.get('/getResetCode', userController.getResetCode)
 
 //mechanics routes
 router.get('/mechanics', authController.checkToken, garageStaffController.getMechanics)
@@ -40,7 +42,14 @@ router.post('/helpSupport', authController.checkToken, appOwnerController.saveHe
 
 
 
-router.get('*', (req: Request, res: Response) => { res.status(404).send('Not Found') })
+//testing routes
+router.get('/testEmail', testController.testEmail)
 
+
+
+
+
+
+router.get('*', (req: Request, res: Response) => { res.status(404).send('Not Found') })
 
 export default router
