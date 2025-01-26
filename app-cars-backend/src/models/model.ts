@@ -1,3 +1,4 @@
+import { required } from "joi";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -5,6 +6,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, require: true },
     phoneNumber: { type: String, require: true },
     password: { type: String, require: true },
+    recoverMode: { type: Boolean, default: false }
 });
 
 const garageStaffSchema = new mongoose.Schema({
@@ -100,8 +102,46 @@ const garageSchema = new mongoose.Schema({
     }]
 
 })
+
+const helpSupportSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    body: {
+        type: String,
+        required: true
+    },
+    sender: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    type: {
+        type: String,
+        required: true
+    },
+    time: { type: Date, default: Date.now },
+})
+
+const resetCodeSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    code: {
+        type: String,
+        required: true
+    },
+    timeStamp: { type: Date, default: Date }
+})
+
 const User = mongoose.model('User', userSchema);
 const GarageStaff = mongoose.model('GarageStaff', garageStaffSchema)
-const GarageOwner=mongoose.model("GarageOwner", garageOwnerSchema)
+const GarageOwner = mongoose.model("GarageOwner", garageOwnerSchema)
 const Garage = mongoose.model('Garage', garageSchema)
-export default { User, GarageStaff, Garage,GarageOwner }
+const HelpSupport = mongoose.model('HelpSupport', helpSupportSchema)
+const ResetCode = mongoose.model('ResetCode', resetCodeSchema)
+
+export default { User, GarageStaff, Garage, GarageOwner, HelpSupport, ResetCode }

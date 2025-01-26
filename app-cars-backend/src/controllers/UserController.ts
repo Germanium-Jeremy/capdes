@@ -1,5 +1,7 @@
 import { Response, Request } from 'express';
 import model from '../models/model';
+import authController from './AuthController';
+import emailController from './EmailController';
 
 
 const getUsers = async (req: Request, res: Response) => {
@@ -14,7 +16,7 @@ const getUsers = async (req: Request, res: Response) => {
         console.error(error);
         res.status(500).json({ message: 'Error fetching users' });
     }
-};
+}
 
 const getUser = async (req: Request, res: Response) => {
     try {
@@ -29,7 +31,7 @@ const getUser = async (req: Request, res: Response) => {
         console.error(error);
         res.status(500).json({ message: 'Error fetching user' });
     }
-};
+}
 
 const updateUser = async (req: Request, res: Response) => {
     try {
@@ -42,7 +44,7 @@ const updateUser = async (req: Request, res: Response) => {
         console.error(error);
         res.status(500).json({ message: 'Error updating user' });
     }
-};
+}
 
 const deleteUser = async (req: Request, res: Response) => {
     try {
@@ -54,11 +56,44 @@ const deleteUser = async (req: Request, res: Response) => {
         console.error(error);
         res.status(500).json({ message: 'Error deleting user' });
     }
-};
+}
+
+
+
+const getResetCode = async (req: Request, res: Response) => {
+    try {
+        const { email } = req.body as { email: string }
+        const userData = await model.User.findOne({ email: email }).select('email names')
+        if (!userData) {
+            res.status(404).json({ message: 'Invalid user' });
+            return
+        }
+
+        const resetCode = await authController.generateResetCode(userData._id.toString())
+
+        const emailObject = {
+            name: userData.names || '',
+            email: userData.email || '',
+            message: `This is reset code ${resetCode}`,
+            title: 'Reset Code'
+        }
+
+        await model.User.findByIdAndUpdate(userData._id.toString(), { recoverMode: true })
+        await emailController.sendEmail(emailObject)
+        res.status(200).json({ message: 'Reset code sent to email' })
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ message: "Error resetting password" })
+    }
+}
+
+
 
 export default {
     getUsers,
     getUser,
     updateUser,
     deleteUser,
+    getResetCode,
 };

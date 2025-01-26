@@ -1,15 +1,7 @@
-import jwt from 'jsonwebtoken';
 import { Request, Response } from "express";
 import validator from '../validator/validator'
 import model from '../models/model'
-import bcrypt from 'bcrypt'
-
-
-const hashPassword = async (password: string): Promise<string> => {
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(password, salt)
-    return hash
-}
+import authController from './AuthController';
 
 
 const signUp = async (req: Request, res: Response): Promise<void> => {
@@ -26,7 +18,7 @@ const signUp = async (req: Request, res: Response): Promise<void> => {
             return
         }
 
-        const hashedPassword = await hashPassword(password)
+        const hashedPassword = await authController.hashPassword(password)
 
         const user = new model.User({ names, email, password: hashedPassword, phoneNumber })
         await user.save()
