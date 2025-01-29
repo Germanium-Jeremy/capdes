@@ -10,7 +10,7 @@ import { Ionicons } from '@expo/vector-icons'
 const signup = () => {
      const { colorScheme, theme } = useContext(ThemeContext)
      const allStyles = AllStyles({ theme, colorScheme })
-     const termsOfServices = <Text style={allStyles.normalText}>Agree to our <Link href={'/'} style={{ color: theme.links }}>terms of services</Link> and <Link href={'/'} style={allStyles.normalText}>privacy policies</Link> </Text>
+     const termsOfServices = <Text style={allStyles.normalText}>Agree to our <Link href={'/(auth)/TermsOfServices'} style={{ color: theme.links }}>terms of services</Link> to continue using our App.</Text>
 
      const [agreeTerms, setAgreeTerms] = useState(false)
 

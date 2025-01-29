@@ -2,9 +2,12 @@ import { Stack } from "expo-router";
 
 export default function SettingLayout () {
      return (
-          <Stack>
-               <Stack.Screen name="index" options={{ headerTitle: "Settings", headerShown: false }} />
-               <Stack.Screen name="updateUser" options={{ headerTitle: "Change Your data" }} />
+          <Stack screenOptions={{ headerShown: false }}>
+               <Stack.Screen name="index" />
+               <Stack.Screen name="updateUser" />
+               <Stack.Screen name="ChangePassword" />
+               <Stack.Screen name="AboutApp" />
+               <Stack.Screen name="HelpSupport" />
           </Stack>
      )
 }

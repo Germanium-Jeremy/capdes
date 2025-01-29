@@ -12,6 +12,7 @@ export default function AuthLayout() {
                <Stack.Screen name="getCode" />
                <Stack.Screen name="code" />
                <Stack.Screen name="reset" />
+               <Stack.Screen name="TermsOfServices" />
           </Stack>
      )
 }

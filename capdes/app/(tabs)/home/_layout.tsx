@@ -8,6 +8,7 @@ const HomeLayout = () => {
                <Stack.Screen name="owner" />
                <Stack.Screen name="waitlist" />
                <Stack.Screen name="allMechs" />
+               <Stack.Screen name="Record" />
           </Stack>
      )
 }

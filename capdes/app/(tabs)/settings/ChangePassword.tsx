@@ -5,7 +5,7 @@ import AllStyles from '@/app/styles/style'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { router } from 'expo-router'
 
-const updateUser = () => {
+const ChangePassword = () => {
      const { colorScheme, theme } = useContext(ThemeContext)
      const allStyles = AllStyles({ theme, colorScheme })
      
@@ -13,25 +13,22 @@ const updateUser = () => {
           <SafeAreaView style={[styles.container, allStyles.allPages]}>
                <View style={{ justifyContent: 'center', gap: 20 }}>
                     <Image source={require('@/assets/images/Design1.png')} resizeMode='contain' style={styles.profileImage} />
-                    <Pressable style={[allStyles.buttons]} onPress={() => router.push('/(tabs)/settings/ChangePassword')}>
-                         <Text style={allStyles.buttonText}>Change your Password</Text>
-                    </Pressable>
                </View>
 
                <View style={{ gap: 10, marginVertical: 30 }}>
-                    <TextInput placeholder='Username' placeholderTextColor={theme.formInputsPlaceholders} style={allStyles.inputs} />
-                    <TextInput placeholder='Email Address' placeholderTextColor={theme.formInputsPlaceholders} style={allStyles.inputs} />
-                    <TextInput placeholder='Password' placeholderTextColor={theme.formInputsPlaceholders} style={allStyles.inputs} />
+                    <TextInput placeholder='Current Password' placeholderTextColor={theme.formInputsPlaceholders} style={allStyles.inputs} />
+                    <TextInput placeholder='New Password' placeholderTextColor={theme.formInputsPlaceholders} style={allStyles.inputs} />
+                    <TextInput placeholder='Confirm Password' placeholderTextColor={theme.formInputsPlaceholders} style={allStyles.inputs} />
                </View>
 
                <Pressable style={[allStyles.buttons]}>
-                    <Text style={allStyles.buttonText}>Update Information</Text>
+                    <Text style={allStyles.buttonText}>Update Password</Text>
                </Pressable>
           </SafeAreaView>
      )
 }
 
-export default updateUser
+export default ChangePassword
 
 const styles = StyleSheet.create({
      container: {
@@ -41,8 +38,8 @@ const styles = StyleSheet.create({
           justifyContent: 'center',
      },
      profileImage: {
-          width: 120,
-          height: 120,
+          width: 150,
+          height: 150,
           borderRadius: 30,
           alignSelf: 'center',
      },

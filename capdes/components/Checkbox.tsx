@@ -12,7 +12,7 @@ interface CustomCheckboxProps {
 const Checkbox: React.FC<CustomCheckboxProps> = ({ label, onToogle, isChecked }) => {
      const { colorScheme, theme } = useContext(ThemeContext);
      return (
-          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, gap: 5, paddingLeft: 20 }} onPress={onToogle} >
+          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, gap: 20, paddingLeft: 20 }} onPress={onToogle} >
                <View style={[styles.checkbox, isChecked && { backgroundColor: theme.links }]}>
                {isChecked && <Text style={styles.checkmark}>✔</Text>}
                </View>

@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { ThemeContext } from '@/Contexts/ThemeContext'
 import AllStyles from '@/app/styles/style'
 import { router } from 'expo-router'
+import { MaterialIcons } from '@expo/vector-icons'
 
 const owner = () => {
      const { colorScheme, theme } = useContext(ThemeContext)
@@ -35,32 +36,14 @@ const owner = () => {
                <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black', fontSize: 20, fontWeight: 500, paddingVertical: 30, paddingHorizontal: 30 }}>Recent Calls</Text>
 
                <View style={[styles.prevWorks, { backgroundColor: theme.background }]}>
-                    <View style={styles.work}>
-                         <Text style={styles.dateRecord}>Date</Text>
+                    <View style={[styles.work, { borderColor: theme.text }]}>
+                         <Text style={[styles.dateRecord, { color: theme.text }]}>Date</Text>
                          <Image source={require('@/assets/images/Design1.png')} resizeMode='contain' style={styles.recordImage} />
                          <View>
-                              <Text>+250 788 888 888</Text>
-                              <Text>Username</Text>
+                              <Text style={{ color: theme.text }}>+250 788 888 888</Text>
+                              <Text style={{ color: theme.text }}>Username</Text>
                          </View>
-                         <Pressable style={styles.more}>...</Pressable>
-                    </View>
-                    <View style={styles.work}>
-                         <Text style={styles.dateRecord}>Date</Text>
-                         <Image source={require('@/assets/images/Design1.png')} resizeMode='contain' style={styles.recordImage} />
-                         <View>
-                              <Text>+250 788 888 888</Text>
-                              <Text>Username</Text>
-                         </View>
-                         <Pressable style={styles.more}>...</Pressable>
-                    </View>
-                    <View style={styles.work}>
-                         <Text style={styles.dateRecord}>Date</Text>
-                         <Image source={require('@/assets/images/Design1.png')} resizeMode='contain' style={styles.recordImage} />
-                         <View>
-                              <Text>+250 788 888 888</Text>
-                              <Text>Username</Text>
-                         </View>
-                         <Pressable style={styles.more}>...</Pressable>
+                         <MaterialIcons name='more-vert' size={28} color={theme.text} style={styles.more} />
                     </View>
                </View>
           </SafeAreaView>

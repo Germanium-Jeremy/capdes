@@ -21,7 +21,7 @@ const login = () => {
                <View style={{ gap: 10 }}>
                     <TextInput placeholder='Email' placeholderTextColor={theme.formInputsPlaceholders} style={allStyles.inputs} />
                     <TextInput placeholder='Password' placeholderTextColor={theme.formInputsPlaceholders} style={allStyles.inputs} />
-                    <Link style={{ color: theme.links, alignSelf: 'flex-end', paddingRight: 20 }} href={'/'}>Forgot Password</Link>
+                    <Link style={{ color: theme.links, alignSelf: 'flex-end', paddingRight: 20 }} href={'/(auth)/getCode'}>Forgot Password</Link>
                </View>
 
                <View style={styles.interations}>
