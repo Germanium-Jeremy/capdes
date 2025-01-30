@@ -17,7 +17,7 @@ export const Colors = {
   dark: {
     text: "#FFFFFF",
     headings: "#0055FF",
-    background: "#000022",
+    background: "#000011",
     buttonsBg: "#0055FF",
     buttonTxt: "#FFFFFF",
     mainIcons: "#FFFFFF",
@@ -27,6 +27,6 @@ export const Colors = {
     formInputsPlaceholders: "#777777",
     formInputsTxt: "#888888",
     formInputsBorder: "#777777",
-    formInputsBg: "#000022",
+    formInputsBg: "#000011",
   },
 };

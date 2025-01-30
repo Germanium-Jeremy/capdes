@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { ThemeContext } from '@/Contexts/ThemeContext';
 
 export default function TabLayout() {
-  const { theme, colorScheme } = useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext)
 
   return (
     <Tabs
@@ -19,10 +19,10 @@ export default function TabLayout() {
           ...Platform.select({
             ios: {
               position: "absolute",
-              backgroundColor: theme.background, // Set background color here
+              backgroundColor: theme.background,
             },
             default: {
-              backgroundColor: theme.background, // Set background color here
+              backgroundColor: theme.background,
             },
           }),
           paddingHorizontal: 20,
