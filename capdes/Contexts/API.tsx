@@ -1,0 +1,1 @@
+export const ROOT_API = "https://capdes-production.up.railway.app/api/";

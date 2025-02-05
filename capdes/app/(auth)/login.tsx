@@ -1,14 +1,100 @@
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useContext } from 'react'
+import { ActivityIndicator, Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useContext, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import AllStyles from '../styles/style'
 import { ThemeContext } from '@/Contexts/ThemeContext'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
+import { ROOT_API } from '@/Contexts/API'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const login = () => {
      const { colorScheme, theme } = useContext(ThemeContext)
      const allStyles = AllStyles({ theme, colorScheme })
+
+     const [email, setEmail] = useState('')
+     const [password, setPassword] = useState('')
+     const [loginError, setLoginError] = useState('')
+     const [loginLoading, setLoginLoading] = useState(false)
+
+     const ActivityContainer = () => {
+          if (loginLoading) return <ActivityIndicator />
+
+          return (
+               <Pressable style={allStyles.buttons} onPress={handleLogin}>
+                    <Text style={allStyles.buttonText}>Log In</Text>
+               </Pressable>
+          );
+     }
+
+     const getUserDetails = async (userToken: string) => {
+          const requestUserData = {
+               method: 'GET',
+               headers: {
+                    'Content-Type': 'application/json',
+                    'token': userToken
+               },
+          }
+
+          try {
+               const userId = await AsyncStorage.getItem("User Id");
+               if (userId == null || !userId || userId.length <= 0) {
+                    setLoginError("No account found, please register")
+                    return
+               }
+
+               const response = await fetch(`${ROOT_API}/user/${JSON.parse(userId)}`, requestUserData);
+               if (!response.ok) {
+                    const errorResponse = await response.json()
+                    setLoginError(errorResponse.message)
+                    console.log("Unable to get user Data", errorResponse)
+                    return
+               }
+
+               const responseJson = await response.json()
+               await AsyncStorage.setItem("User Data", JSON.stringify(responseJson))
+               console.log("User Data: ", responseJson)
+               return true
+          } catch (error) {
+               console.log("Unable to get user Data: ", error)
+               return false
+          }
+     }
+
+     const handleLogin = async () => {
+          setLoginLoading(true)
+
+          const requestLogin = {
+               method: 'POST',
+               headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({ email, password })
+          }
+
+          try {
+               const response = await fetch(`${ROOT_API}/signIn`, requestLogin)
+
+               if (!response.ok) {
+                    const errorResponse = await response.json();
+                    setLoginError(errorResponse.message)
+                    return
+               }
+
+               const responseJson = await response.json()
+               await AsyncStorage.setItem("User Token", JSON.stringify(responseJson.accessToken))
+
+               if (await getUserDetails(responseJson.accessToken)) {
+                    router.push('/(tabs)/home')
+               } else {
+                    console.error("Unable to get user data")
+               }
+          } catch (error) {
+               setLoginError('An unexpected Error')
+               console.error("Error login: ", error)
+          } finally {
+               setLoginLoading(false)
+          }
+     }
+     
      return (
           <SafeAreaView style={[allStyles.allPages, styles.container]}>
                <Image source={require('@/assets/images/Design3.png')} resizeMode='contain' style={styles.image} />
@@ -16,18 +102,17 @@ const login = () => {
                <View style={styles.intro}>
                     <Text style={allStyles.headings}>Log In Now</Text>
                     <Text style={[allStyles.normalText, { paddingHorizontal: 60, textAlign: 'center' }]}>Please login to continue using our app</Text>
+                    <Text style={[allStyles.normalText, { paddingHorizontal: 60, textAlign: 'center', color: 'red', fontWeight: 500, paddingVertical: 10 }]}>{ loginError }</Text>
                </View>
 
                <View style={{ gap: 10 }}>
-                    <TextInput placeholder='Email' placeholderTextColor={theme.formInputsPlaceholders} style={allStyles.inputs} />
-                    <TextInput placeholder='Password' placeholderTextColor={theme.formInputsPlaceholders} style={allStyles.inputs} />
+                    <TextInput placeholder='Email' placeholderTextColor={theme.formInputsPlaceholders} style={allStyles.inputs} value={email} onChangeText={setEmail} />
+                    <TextInput placeholder='Password' placeholderTextColor={theme.formInputsPlaceholders} style={allStyles.inputs} value={password} onChangeText={setPassword} />
                     <Link style={{ color: theme.links, alignSelf: 'flex-end', paddingRight: 20 }} href={'/(auth)/getCode'}>Forgot Password</Link>
                </View>
 
                <View style={styles.interations}>
-                    <Pressable style={allStyles.buttons}>
-                         <Text style={allStyles.buttonText}>Log In</Text>
-                    </Pressable>
+                    <ActivityContainer />
                     <Text style={[allStyles.normalText, { textAlign: 'center' }]}>Don't have an account? <Link href={'/(auth)/signup'} style={{ color: theme.links }}>Sign Up</Link></Text>
                </View>
 
