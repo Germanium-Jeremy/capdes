@@ -10,7 +10,7 @@ const getMechanics = async (req: Request, res: Response) => {
             .populate([
                 { path: 'details', select: 'email phoneNumber names', model: 'User' },
                 { path: 'garage', select: 'garageName owner location', model: 'Garage' }
-            ]);
+            ])
         if (!mechanics) {
             res.status(404).json({ message: 'No mechanics found' });
             return

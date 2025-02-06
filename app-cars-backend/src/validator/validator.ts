@@ -60,7 +60,16 @@ const garageSchema = Joi.object({
         'string.empty': 'registration proof is required',
         'any.required': 'registration proof is required'
     }),
-    workingTime: Joi.string().required().messages({
+    workingTime: Joi.object({
+        from:Joi.date().required().messages({
+            'string.empty': 'working time is required',
+            'any.required': 'working time is required'
+        }),
+        to:Joi.date().required().messages({
+            'string.empty': 'working time is required',
+            'any.required': 'working time is required'
+        })
+    }).required().messages({
         'string.empty': 'working time is required',
         'any.required': 'working time is required'
     })

@@ -23,8 +23,9 @@ router.post('/checkResetCode', authController.checkResetToken,authController.che
 
 //users routes
 router.get('/users', authController.checkToken, userController.getUsers)
+router.get('/per')
 router.get('/user/:userId', authController.checkToken, userController.getUser)
-router.get('/getResetCode', userController.getResetCode)
+router.post('/getResetCode', userController.getResetCode)
 
 //mechanics routes
 router.get('/mechanics', authController.checkToken, garageStaffController.getMechanics)
