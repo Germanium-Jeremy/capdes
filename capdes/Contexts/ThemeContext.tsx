@@ -14,8 +14,9 @@ export const ThemeContext = createContext<ThemeContextValue>({
 })
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-     const [colorScheme, setColorScheme] = useState<"light" | "dark">("dark")
+     const [colorScheme, setColorScheme] = useState<"light" | "dark">("light")
      const theme = colorScheme === 'dark' ? Colors.dark : Colors.light
+     
      return (
           <ThemeContext.Provider value={{ colorScheme, setColorScheme, theme }}>
                { children }
