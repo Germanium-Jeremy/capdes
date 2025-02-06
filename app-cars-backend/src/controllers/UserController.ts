@@ -33,6 +33,30 @@ const getUser = async (req: Request, res: Response) => {
     }
 }
 
+
+const getCurrentUser = async (req: Request, res: Response) => {
+    try {
+        const { userId } = res.locals
+        const user = await model.User.findById(userId).select('names email phoneNumber');
+        if (!user) {
+            res.status(404).json({ message: 'User not found' });
+            return
+        }
+        const isMechanic = await model.GarageStaff.findOne({ details: user._id }).select('-details').populate('garage')
+        const isGarageOwner = await model.GarageOwner.findOne({ details: user._id }).select('-details').populate('garage')
+        if (isGarageOwner) {
+            res.status(200).json({ ...user.toObject(), ...isGarageOwner.toObject() });
+        }
+        if (isMechanic) {
+            res.status(200).json({ ...user.toObject(), ...isMechanic.toObject() });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error fetching user' });
+    }
+}
+
 const updateUser = async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
@@ -96,4 +120,5 @@ export default {
     updateUser,
     deleteUser,
     getResetCode,
+    getCurrentUser
 };

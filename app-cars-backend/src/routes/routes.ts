@@ -23,7 +23,7 @@ router.post('/checkResetCode', authController.checkResetToken,authController.che
 
 //users routes
 router.get('/users', authController.checkToken, userController.getUsers)
-router.get('/per')
+router.get('/currentUser', authController.checkToken, userController.getCurrentUser)
 router.get('/user/:userId', authController.checkToken, userController.getUser)
 router.post('/getResetCode', userController.getResetCode)
 
