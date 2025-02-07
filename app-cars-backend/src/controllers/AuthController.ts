@@ -115,9 +115,13 @@ const signIn = async (req: Request, res: Response) => {
             return
         }
 
-        const user = await model.User.findOne({ email }).select('password') as unknown as { email: string, password: string, _id: string }
+        const user = await model.User.findOne({ email }).select('password recoverMode') as unknown as { email: string, password: string, _id: string, recoverMode: boolean }
         if (!user) {
             res.status(401).json({ message: 'Invalid email or password' });
+            return
+        }
+        if (user.recoverMode) {
+            res.status(400).json({ message: 'Account in recovery mode' })
             return
         }
 
@@ -141,12 +145,12 @@ const signIn = async (req: Request, res: Response) => {
 }
 
 
-const resetCode = async (req: Request, res: Response) => {
+const resetPassword = async (req: Request, res: Response) => {
     try {
         const userId = res.locals.userId
-        const { oldPassword, newPassword } = req.body as { oldPassword: string, newPassword: string }
+        const { newPassword } = req.body as { newPassword: string }
 
-        if (!oldPassword || !newPassword) {
+        if (!newPassword) {
             res.status(400).json({ message: 'Old password and new password are required' })
             return
         }
@@ -165,17 +169,6 @@ const resetCode = async (req: Request, res: Response) => {
 
         if (!userData.password) {
             res.status(404).json({ message: 'User not found' })
-            return
-        }
-
-        const isOldPasswordTrue = await bcrypt.compare(oldPassword, userData.password)
-        if (!isOldPasswordTrue) {
-            res.status(401).json({ message: 'Password incorrect' })
-            return
-        }
-
-        if (oldPassword === newPassword) {
-            res.status(400).json({ message: 'Old password and new password cannot be the same' })
             return
         }
 
@@ -224,8 +217,9 @@ const checkResetCode = async (req: Request, res: Response) => {
             return
         }
         await model.User.findByIdAndUpdate(userId, { password: 'null' })
+        const resetToken= generateResetToken(userId)
 
-        res.status(200).json({ message: 'Reset code correct' })
+        res.status(200).json({ message: 'Reset code correct', resetToken })
     } catch (error) {
         console.error(error)
         res.status(500).json({ message: 'Reset code not correct' })
@@ -239,7 +233,8 @@ export default {
     refreshToken,
     signIn,
     generateResetCode,
-    resetCode,
+    resetPassword,
     checkResetCode,
     checkResetToken,
+    generateResetToken
 }

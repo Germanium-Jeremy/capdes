@@ -20,8 +20,8 @@ router.post('/registerGarage', registerController.registerGarage)
 //auth routes
 router.post('/signIn', authController.signIn)
 router.get('/test', authController.checkToken)
-router.put('/saveNewPassword',authController.checkResetToken, authController.checkToken, authController.resetCode)
-router.post('/checkResetCode', authController.checkResetToken,authController.checkResetCode)
+router.put('/saveNewPassword',authController.checkResetToken,  authController.resetPassword)
+router.post('/checkResetCode',authController.checkResetCode)
 
 
 //users routes

@@ -11,7 +11,6 @@ const sendEmail = async ({ name, email, message, title }: EmailSenderProps): Pro
     if (!name || !email || !message) {
         throw new Error("All fields are required.");
     }
-    console.log(email, name, message, title)
 
     try {
         const response = await axios.post("https://api.emailjs.com/api/v1.0/email/send", {
