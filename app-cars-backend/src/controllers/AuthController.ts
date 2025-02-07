@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import model from '../models/model';
+import crypto from 'crypto'
 import bcrypt from 'bcrypt'
 
 const refreshToken = (id: string): string => {
@@ -11,12 +12,13 @@ const generateResetToken = (id: string): string => {
     return jwt.sign({ id }, process.env.JWT_SECRET as string, { expiresIn: '0.5h' })
 }
 
-const generateResetCode = async (userId: string) => {
-    const salt = await bcrypt.genSalt(100)
-    const result = await bcrypt.hash(userId, salt)
-    const resetCode = result.slice(0, 5)
-    return resetCode
-}
+const generateResetCode = (userId: string) => {
+    const randomValue = crypto.randomBytes(16).toString('hex'); // Generate a random string
+    const dynamicInput = userId + randomValue; // Combine userId with the random value
+    const hash = crypto.createHash('sha256').update(dynamicInput).digest('hex'); // Generate a SHA256 hash
+    const resetCode = hash.slice(0, 6); // Take the first 6 characters
+    return resetCode.toUpperCase(); // Optional: Convert to uppercase for readability
+};
 
 const hashPassword = async (password: string): Promise<string> => {
     const salt = await bcrypt.genSalt(10)

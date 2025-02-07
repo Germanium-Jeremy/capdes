@@ -4,7 +4,7 @@ import model from '../models/model'
 import authController from './AuthController';
 
 
-const signUp = async (req: Request, res: Response): Promise<void> => {
+const signUp = async (req: Request, res: Response)=> {
     try {
         const { error, value } = validator.regularUserSchema.validate(req.body)
         if (error) {

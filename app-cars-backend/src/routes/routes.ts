@@ -5,9 +5,11 @@ import userController from "../controllers/UserController"
 import garageController from "../controllers/GarageController"
 import garageStaffController from "../controllers/GarageStaffController"
 import appOwnerController from "../controllers/AppOwnerController"
-import testController from "../controllers/TestController.test"
+import testController from "../controllers/Email.test"
+import { TestData } from "../controllers/InitialData.test"
 
 const router = Router()
+
 
 //registration routes
 router.post('/signUp', registerController.signUp)
@@ -21,11 +23,13 @@ router.get('/test', authController.checkToken)
 router.put('/saveNewPassword',authController.checkResetToken, authController.checkToken, authController.resetCode)
 router.post('/checkResetCode', authController.checkResetToken,authController.checkResetCode)
 
+
 //users routes
 router.get('/users', authController.checkToken, userController.getUsers)
 router.get('/currentUser', authController.checkToken, userController.getCurrentUser)
 router.get('/user/:userId', authController.checkToken, userController.getUser)
 router.post('/getResetCode', userController.getResetCode)
+
 
 //mechanics routes
 router.get('/mechanics', authController.checkToken, garageStaffController.getMechanics)
@@ -42,15 +46,10 @@ router.post('/helpSupport', authController.checkToken, appOwnerController.saveHe
 // router.get('/helpSupport/:helpSupportId', authController.checkToken, appOwnerController.getHelpSupport)
 
 
-
 //testing routes
 router.get('/testEmail', testController.testEmail)
 
-
-
-
-
-
-router.get('*', (req: Request, res: Response) => { res.status(404).send('Not Found') })
+router.get('/testData',TestData)
+router.get('*', (req: Request, res: Response) => { res.status(404).send('Api not found') })
 
 export default router

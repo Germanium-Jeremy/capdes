@@ -11,6 +11,7 @@ const sendEmail = async ({ name, email, message, title }: EmailSenderProps): Pro
     if (!name || !email || !message) {
         throw new Error("All fields are required.");
     }
+    console.log(email, name, message, title)
 
     try {
         const response = await axios.post("https://api.emailjs.com/api/v1.0/email/send", {
@@ -23,20 +24,20 @@ const sendEmail = async ({ name, email, message, title }: EmailSenderProps): Pro
                 message: message,
                 title: title,
                 from: 'CAPDES',
-                from_name: 'wigothehacker',
-                reply_to: 'wigoCompany',
+                from_name: 'CAPDES Support Team',
+                reply_to: 'wigothehacker@gmail.com',
             },
             accessToken: process.env.EMAILJS_PRIVATE_KEY
         })
+        
 
         if (response.status === 200) return "Email sent successfully.";
         else throw new Error("Error sending email.");
-
     } catch (error: any) {
         console.error("Error sending email:", error.message);
         throw new Error("An error occurred while sending the email.");
     }
-};
+}
 
 export default {
     sendEmail

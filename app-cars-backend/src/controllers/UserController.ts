@@ -93,7 +93,7 @@ const getResetCode = async (req: Request, res: Response) => {
             return
         }
 
-        const resetCode = await authController.generateResetCode(userData._id.toString())
+        const resetCode =  authController.generateResetCode(userData._id.toString())
 
         const emailObject = {
             name: userData.names || '',
@@ -102,10 +102,9 @@ const getResetCode = async (req: Request, res: Response) => {
             title: 'Reset Code'
         }
 
-        await model.User.findByIdAndUpdate(userData._id.toString(), { recoverMode: true })
+        await model.User.findByIdAndUpdate(userData._id, { recoverMode: true })
         await emailController.sendEmail(emailObject)
-        res.status(200).json({ message: 'Reset code sent to email' })
-
+        res.status(200).json({ message: 'Reset code sent to your email' })
     } catch (error) {
         console.error(error)
         res.status(500).json({ message: "Error resetting password" })
