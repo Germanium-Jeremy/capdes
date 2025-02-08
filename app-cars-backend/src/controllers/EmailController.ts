@@ -22,9 +22,6 @@ const sendEmail = async ({ name, email, message, title }: EmailSenderProps): Pro
                 to_name: name,
                 message: message,
                 title: title,
-                from: 'CAPDES',
-                from_name: 'CAPDES Support Team',
-                reply_to: 'wigothehacker@gmail.com',
             },
             accessToken: process.env.EMAILJS_PRIVATE_KEY
         })

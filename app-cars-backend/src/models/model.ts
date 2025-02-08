@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
 const userSchema = new mongoose.Schema({
     names: { type: String, require: true },
@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     phoneNumber: { type: String, require: true },
     password: { type: String, require: true },
     recoverMode: { type: Boolean, default: false }
-});
+})
 
 const garageStaffSchema = new mongoose.Schema({
     details: {
@@ -136,7 +136,7 @@ const resetCodeSchema = new mongoose.Schema({
     timeStamp: { type: Date, default: Date }
 })
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema)
 const GarageStaff = mongoose.model('GarageStaff', garageStaffSchema)
 const GarageOwner = mongoose.model("GarageOwner", garageOwnerSchema)
 const Garage = mongoose.model('Garage', garageSchema)

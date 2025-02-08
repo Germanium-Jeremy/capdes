@@ -4,23 +4,19 @@ import model from '../models/model';
 import crypto from 'crypto'
 import bcrypt from 'bcrypt'
 
-const refreshToken = (id: string): string => {
-    return jwt.sign({ id }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
-}
+const refreshToken = (id: string): string => jwt.sign({ id }, process.env.JWT_SECRET as string, { expiresIn: '1h' })
+const generateResetToken = (id: string) => jwt.sign({ id }, process.env.JWT_SECRET as string, { expiresIn: '0.5h' })
 
-const generateResetToken = (id: string): string => {
-    return jwt.sign({ id }, process.env.JWT_SECRET as string, { expiresIn: '0.5h' })
-}
 
 const generateResetCode = (userId: string) => {
-    const randomValue = crypto.randomBytes(16).toString('hex'); // Generate a random string
-    const dynamicInput = userId + randomValue; // Combine userId with the random value
-    const hash = crypto.createHash('sha256').update(dynamicInput).digest('hex'); // Generate a SHA256 hash
-    const resetCode = hash.slice(0, 6); // Take the first 6 characters
-    return resetCode.toUpperCase(); // Optional: Convert to uppercase for readability
+    const randomValue = crypto.randomBytes(16).toString('hex')
+    const dynamicInput = userId + randomValue;
+    const hash = crypto.createHash('sha256').update(dynamicInput).digest('hex')
+    const resetCode = hash.slice(0, 6)
+    return resetCode.toUpperCase()
 };
 
-const hashPassword = async (password: string): Promise<string> => {
+const hashPassword = async (password: string)=> {
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
     return hash
@@ -81,10 +77,10 @@ const checkResetToken = (req: Request, res: Response, next: NextFunction) => {
                 res.status(403).json({ message: 'Forbidden: Invalid token' })
                 return
             }
-            res.locals = { userId: decodedToken?.id }
-            next();
-        });
-    } catch (error: any) {
+            res.locals = { userId: decodedToken.id }
+            next()
+        })
+    } catch (error) {
         console.error(error);
         return
     }
@@ -130,8 +126,8 @@ const signIn = async (req: Request, res: Response) => {
             res.status(401).json({ message: 'Incorrect password' });
             return
         }
-        let role = 'user'
 
+        let role = 'user'
         const isMechanic = await model.GarageStaff.findOne({ details: user._id }).select('details')
         const isGarageOwner = await model.GarageOwner.findOne({ details: user._id }).select('details')
         if (isGarageOwner) role = 'garageOwner'
@@ -173,10 +169,9 @@ const resetPassword = async (req: Request, res: Response) => {
         }
 
         const newPassWordToBeSaved = await hashPassword(newPassword)
-        await model.User.findByIdAndUpdate(userId, { password: newPassWordToBeSaved })
+        await model.User.findByIdAndUpdate(userId, { password: newPassWordToBeSaved, recoverMode: false })
 
         res.status(200).json({ message: 'Password saved' })
-
     } catch (error) {
         console.error(error)
         res.status(500).json({ message: 'Password not saved' })
@@ -217,7 +212,7 @@ const checkResetCode = async (req: Request, res: Response) => {
             return
         }
         await model.User.findByIdAndUpdate(userId, { password: 'null' })
-        const resetToken= generateResetToken(userId)
+        const resetToken = generateResetToken(userId)
 
         res.status(200).json({ message: 'Reset code correct', resetToken })
     } catch (error) {

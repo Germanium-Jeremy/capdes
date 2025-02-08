@@ -1,6 +1,4 @@
-import Joi from 'joi';
-
-
+import Joi from 'joi'
 
 const regularUserSchema = Joi.object({
     names: Joi.string().required().messages({
@@ -32,7 +30,7 @@ const mechanicSchema = Joi.object({
         'string.empty': 'User is required',
         'any.required': 'User is required'
     })
-});
+})
 
 
 const garageSchema = Joi.object({
@@ -60,16 +58,7 @@ const garageSchema = Joi.object({
         'string.empty': 'registration proof is required',
         'any.required': 'registration proof is required'
     }),
-    workingTime: Joi.object({
-        from:Joi.date().required().messages({
-            'string.empty': 'working time is required',
-            'any.required': 'working time is required'
-        }),
-        to:Joi.date().required().messages({
-            'string.empty': 'working time is required',
-            'any.required': 'working time is required'
-        })
-    }).required().messages({
+    workingTime: Joi.string().required().messages({
         'string.empty': 'working time is required',
         'any.required': 'working time is required'
     })

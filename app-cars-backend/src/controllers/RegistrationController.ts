@@ -11,6 +11,7 @@ const signUp = async (req: Request, res: Response)=> {
             res.status(400).json({ message: error.message })
             return
         }
+        
         const { names, email, password, phoneNumber } = value
         const isRegistered = await model.User.findOne({ email: email });
         if (isRegistered) {

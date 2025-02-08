@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import validator from "../validator/validator";
-import model from "../models/model";
+import { Request, Response } from "express"
+import validator from "../validator/validator"
+import model from "../models/model"
 
 
 const saveHelpSupport = async (req: Request, res: Response) => {
