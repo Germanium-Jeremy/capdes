@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
-import model from '../models/model';
+import { Request, Response, NextFunction } from 'express'
+import jwt from 'jsonwebtoken'
+import model from '../models/model'
 import crypto from 'crypto'
 import bcrypt from 'bcrypt'
 
@@ -10,11 +10,11 @@ const generateResetToken = (id: string) => jwt.sign({ id }, process.env.JWT_SECR
 
 const generateResetCode = (userId: string) => {
     const randomValue = crypto.randomBytes(16).toString('hex')
-    const dynamicInput = userId + randomValue;
+    const dynamicInput = userId + randomValue
     const hash = crypto.createHash('sha256').update(dynamicInput).digest('hex')
     const resetCode = hash.slice(0, 6)
     return resetCode.toUpperCase()
-};
+}
 
 const hashPassword = async (password: string)=> {
     const salt = await bcrypt.genSalt(10)
@@ -24,47 +24,47 @@ const hashPassword = async (password: string)=> {
 
 const checkToken = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const accessToken = req.headers['token'] as string | undefined;
+        const accessToken = req.headers['token'] as string | undefined
         if (!accessToken) {
-            res.status(401).json({ message: 'Unauthorized: Access token is missing' });
+            res.status(401).json({ message: 'Unauthorized: Access token is missing' })
             return
         }
 
-        const decodedToken = jwt.decode(accessToken) as { id: string } | null;
+        const decodedToken = jwt.decode(accessToken) as { id: string } | null
         if (!decodedToken || !decodedToken.id) {
-            res.status(401).json({ message: 'Unauthorized: Invalid token' });
+            res.status(401).json({ message: 'Unauthorized: Invalid token' })
             return
         }
 
         jwt.verify(accessToken, process.env.JWT_SECRET as string, (err, user) => {
             if (err) {
                 if (err.name === 'TokenExpiredError') {
-                    const newToken = refreshToken(decodedToken.id);
-                    res.status(401).json({ message: 'Token expired', newToken });
+                    const newToken = refreshToken(decodedToken.id)
+                    res.status(401).json({ message: 'Token expired', newToken })
                     return
                 }
-                res.status(403).json({ message: 'Forbidden: Invalid token' });
+                res.status(403).json({ message: 'Forbidden: Invalid token' })
                 return
             }
-            res.locals = { userId: decodedToken.id };
+            res.locals = { userId: decodedToken.id }
             next()
         })
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error', error });
+        res.status(500).json({ message: 'Internal server error', error })
         return
     }
 }
 
 const checkResetToken = (req: Request, res: Response, next: NextFunction) => {
     try {
-        const resetToken = req.headers['resetoken'] as unknown as string;
+        const resetToken = req.headers['resetoken'] as unknown as string
         if (!resetToken) {
-            res.status(401).json({ message: 'Reset token is required' });
+            res.status(401).json({ message: 'Reset token is required' })
         }
 
-        const decodedToken = jwt.decode(resetToken) as { id: string } | null;
+        const decodedToken = jwt.decode(resetToken) as { id: string } | null
         if (!decodedToken || !decodedToken.id) {
-            res.status(401).json({ message: 'Unauthorized: Invalid token' });
+            res.status(401).json({ message: 'Unauthorized: Invalid token' })
             return
         }
 
@@ -81,7 +81,7 @@ const checkResetToken = (req: Request, res: Response, next: NextFunction) => {
             next()
         })
     } catch (error) {
-        console.error(error);
+        console.error(error)
         return
     }
 
@@ -104,16 +104,16 @@ const checkUser = async (req: Request, res: Response) => {
 
 const signIn = async (req: Request, res: Response) => {
     try {
-        const { email, password } = req.body as { email: string, password: string };
+        const { email, password } = req.body as { email: string, password: string }
 
         if (!email || !password) {
-            res.status(400).json({ message: 'Email and password are required' });
+            res.status(400).json({ message: 'Email and password are required' })
             return
         }
 
         const user = await model.User.findOne({ email }).select('password recoverMode') as unknown as { email: string, password: string, _id: string, recoverMode: boolean }
         if (!user) {
-            res.status(401).json({ message: 'Invalid email or password' });
+            res.status(401).json({ message: 'Invalid email or password' })
             return
         }
         if (user.recoverMode) {
@@ -121,9 +121,9 @@ const signIn = async (req: Request, res: Response) => {
             return
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        const isPasswordValid = await bcrypt.compare(password, user.password)
         if (!isPasswordValid) {
-            res.status(401).json({ message: 'Incorrect password' });
+            res.status(401).json({ message: 'Incorrect password' })
             return
         }
 
@@ -132,11 +132,11 @@ const signIn = async (req: Request, res: Response) => {
         const isGarageOwner = await model.GarageOwner.findOne({ details: user._id }).select('details')
         if (isGarageOwner) role = 'garageOwner'
         if (isMechanic) role = 'mechanic'
-        const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string, { expiresIn: '7d' });
-        res.status(200).json({ message: 'Login successful', accessToken, role });
+        const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string, { expiresIn: '7d' })
+        res.status(200).json({ message: 'Login successful', accessToken, role })
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        console.error(error)
+        res.status(500).json({ message: 'Server error' })
     }
 }
 

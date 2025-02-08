@@ -15,6 +15,7 @@ const router = Router()
 router.post('/signUp', registerController.signUp)
 router.post('/registerMechanic', registerController.registerMechanic)
 router.post('/registerGarage', registerController.registerGarage)
+router.post('/registerGoogleUser', registerController.registerGoogleUser)
 
 
 //auth routes

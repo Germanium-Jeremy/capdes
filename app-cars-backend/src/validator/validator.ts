@@ -20,6 +20,20 @@ const regularUserSchema = Joi.object({
     }),
 })
 
+const googleUserSchema = Joi.object({
+    googleId: Joi.string().required(),
+    email: Joi.string().email().required(),
+    emailVerified: Joi.boolean().required(),
+    name: Joi.string().required(),
+    givenName: Joi.string().optional(),
+    familyName: Joi.string().optional(),
+    picture: Joi.string().uri().optional(),
+    locale: Joi.string().optional(),
+    createdAt: Joi.date(),
+    phoneNumber: Joi.string().required()
+});
+
+
 
 const mechanicSchema = Joi.object({
     garageId: Joi.string().required().messages({
@@ -86,4 +100,5 @@ export default {
     garageSchema,
     mechanicSchema,
     helpSupportSchema,
+    googleUserSchema
 }

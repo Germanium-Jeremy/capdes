@@ -2,16 +2,17 @@ import { Request, Response } from "express";
 import validator from '../validator/validator'
 import model from '../models/model'
 import authController from './AuthController';
+import { GoogleUser } from "../interfaces/UserInterfaces";
 
 
-const signUp = async (req: Request, res: Response)=> {
+const signUp = async (req: Request, res: Response) => {
     try {
         const { error, value } = validator.regularUserSchema.validate(req.body)
         if (error) {
             res.status(400).json({ message: error.message })
             return
         }
-        
+
         const { names, email, password, phoneNumber } = value
         const isRegistered = await model.User.findOne({ email: email });
         if (isRegistered) {
@@ -22,6 +23,30 @@ const signUp = async (req: Request, res: Response)=> {
         const hashedPassword = await authController.hashPassword(password)
 
         const user = new model.User({ names, email, password: hashedPassword, phoneNumber })
+        await user.save()
+        res.status(200).json({ message: 'signup success', userId: user.toObject()._id })
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ message: error })
+    }
+}
+
+const registerGoogleUser = async (req: Request, res: Response) => {
+    try {
+        const { error, value } = validator.googleUserSchema.validate(req.body)
+        if (error) {
+            res.status(400).json({ message: error.message })
+            return
+        }
+
+        const userData: GoogleUser = value
+        const isRegistered = await model.GoogleUser.findOne({ googleId: userData.googleId });
+        if (isRegistered) {
+            res.status(400).json({ message: 'Account already exists' })
+            return
+        }
+
+        const user = new model.GoogleUser(userData)
         await user.save()
         res.status(200).json({ message: 'signup success', userId: user.toObject()._id })
     } catch (error) {
@@ -103,4 +128,5 @@ export default {
     signUp,
     registerMechanic,
     registerGarage,
+    registerGoogleUser
 }

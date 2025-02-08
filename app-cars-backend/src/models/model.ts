@@ -8,6 +8,19 @@ const userSchema = new mongoose.Schema({
     recoverMode: { type: Boolean, default: false }
 })
 
+const googleUSerSchema = new mongoose.Schema({
+    googleId: { type: String, required: true, unique: true },  // sub
+    email: { type: String, required: true, unique: true },
+    emailVerified: { type: Boolean, required: true },
+    name: { type: String, required: true },
+    givenName: { type: String },
+    familyName: { type: String },
+    picture: { type: String },
+    locale: { type: String },
+    createdAt: { type: Date, default: Date.now },
+    phoneNumber: { type: String }
+});
+
 const garageStaffSchema = new mongoose.Schema({
     details: {
         type: mongoose.Schema.Types.ObjectId,
@@ -142,5 +155,14 @@ const GarageOwner = mongoose.model("GarageOwner", garageOwnerSchema)
 const Garage = mongoose.model('Garage', garageSchema)
 const HelpSupport = mongoose.model('HelpSupport', helpSupportSchema)
 const ResetCode = mongoose.model('ResetCode', resetCodeSchema)
+const GoogleUser = mongoose.model('GoogleUser', googleUSerSchema)
 
-export default { User, GarageStaff, Garage, GarageOwner, HelpSupport, ResetCode }
+export default {
+    User,
+    GarageStaff,
+    Garage,
+    GarageOwner,
+    HelpSupport,
+    ResetCode,
+    GoogleUser
+}
