@@ -16,6 +16,7 @@ const login = () => {
      const [password, setPassword] = useState('')
      const [loginError, setLoginError] = useState('')
      const [loginLoading, setLoginLoading] = useState(false)
+     const [goodRes, setGoodRes] = useState(false)
 
      const ActivityContainer = () => {
           if (loginLoading) return <ActivityIndicator />
@@ -37,13 +38,7 @@ const login = () => {
           }
 
           try {
-               const userId = await AsyncStorage.getItem("User Id");
-               if (userId == null || !userId || userId.length <= 0) {
-                    setLoginError("No account found, please register")
-                    return
-               }
-
-               const response = await fetch(`${ROOT_API}/user/${JSON.parse(userId)}`, requestUserData);
+               const response = await fetch(`${ROOT_API}/currentUser`, requestUserData);
                if (!response.ok) {
                     const errorResponse = await response.json()
                     setLoginError(errorResponse.message)
@@ -81,17 +76,23 @@ const login = () => {
 
                const responseJson = await response.json()
                await AsyncStorage.setItem("User Token", JSON.stringify(responseJson.accessToken))
+               await AsyncStorage.setItem("User role", JSON.stringify(responseJson.role))
 
                if (await getUserDetails(responseJson.accessToken)) {
+                    setGoodRes(true)
                     router.push('/(tabs)/home')
                } else {
                     console.error("Unable to get user data")
+                    setGoodRes(false)
                }
           } catch (error) {
                setLoginError('An unexpected Error')
                console.error("Error login: ", error)
           } finally {
                setLoginLoading(false)
+               if (goodRes) {
+                    router.push('/(tabs)/home')
+               }
           }
      }
      

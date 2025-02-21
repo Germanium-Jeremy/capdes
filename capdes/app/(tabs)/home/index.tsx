@@ -16,6 +16,7 @@ const index = () => {
      const { colorScheme, theme } = useContext(ThemeContext)
      const allStyles = AllStyles({ theme, colorScheme })
 
+     const [userRole, setUserRole] = useState('user')
      const [userData, setUserData] = useState<UserDataResponse>({
           email: '',
           names: '',
@@ -25,15 +26,16 @@ const index = () => {
      useEffect(() => {
           const getUserData = async () => {
                const data = await AsyncStorage.getItem("User Data");
-               if (!data || data.length <= 0) {
+               const role = await AsyncStorage.getItem("User role");
+               if (!data || data.length <= 0 || !role) {
                     setTimeout(() => {
                          Alert.alert("Please Login")
                     }, 2000);
                     router.push('/(auth)/login')
                     return
                }
-
                setUserData(JSON.parse(data))
+               setUserRole(JSON.parse(role))
           }
           getUserData()
      }, [])
@@ -45,12 +47,14 @@ const index = () => {
                     <Text style={[allStyles.inputs, { color: theme.formInputsTxt }]}>{ userData.names }</Text>
                     <Text style={[allStyles.inputs, { color: theme.formInputsTxt }]}>{ userData.email }</Text>
                     <Text style={[allStyles.inputs, { color: theme.formInputsTxt }]}>{ userData.phoneNumber }</Text>
-                    <Pressable style={[allStyles.buttons, { marginTop: 10 }]} onPress={() => router.push('/(tabs)/home/owner')}>
-                         <Text style={allStyles.buttonText}>Your Data / Garage</Text>
-                    </Pressable>
+                    {userRole != "user" &&
+                         <Pressable style={[allStyles.buttons, { marginTop: 10 }]} onPress={() => router.push(userRole == 'mechanic' ? '/(tabs)/home/mechanic' : '/(tabs)/home/owner')}>
+                              <Text style={allStyles.buttonText}>View Previous Work</Text>
+                         </Pressable>
+                    }
                </View>
 
-               <Link href={'/(tabs)/home/mechanic'} style={{ color: theme.links, textAlign: 'center', fontWeight: 600 }}>Logout</Link>
+               <Link href={'/(auth)/login'} style={{ color: theme.links, textAlign: 'center', fontWeight: 600 }}>Logout</Link>
           </SafeAreaView>
      )
 }

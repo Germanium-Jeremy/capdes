@@ -14,12 +14,10 @@ const getCode = () => {
 
      const [loadingCode, setLoadingCode] = useState(false)
      const [email, setEmail] = useState('')
-     const [goodResponse, setGoodResponse] = useState(false)
      const [getCodeError, setGetCodeError] = useState('')
 
      const handleGetCode = async () => {
           setLoadingCode(true)
-          setGoodResponse(false)
           setGetCodeError('')
 
           const requestCode = {
@@ -32,23 +30,20 @@ const getCode = () => {
                const response = await fetch(`${ROOT_API}/getResetCode`, requestCode)
                if (!response.ok) {
                     const errorResponse = await response.json()
+                    console.log(errorResponse)
                     setGetCodeError(errorResponse.message)
                     return
                }
 
                const responseJson = await response.json()
+               console.log(responseJson)
                setResetEmail(email)
-               setGoodResponse(true)
+               router.push("/(auth)/code");
           } catch (error) {
                setGetCodeError('An unexpected error occured' + error)
                console.error("Unexpected error", error)
           } finally {
                setLoadingCode(false)
-               if (goodResponse) {
-                    router.push("/(auth)/code");
-               } else {
-                    console.log("No good response got!");
-               }
           }
      }
 
